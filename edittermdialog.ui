@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditTermDialog</class>
+ <widget class="QDialog" name="EditTermDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>609</width>
+    <height>387</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="4" column="1">
+    <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Meaning</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Pinyin</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPlainTextEdit" name="plainTextEdit"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>Term</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Example</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="wordLabel">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPlainTextEdit" name="plainTextEdit_4"/>
+   </item>
+   <item row="1" column="2" rowspan="4">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Status</string>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioBtnNew">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(170,170,255, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>New</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioBtnUnknown">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="label_2">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255,83,169, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>Unknown</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="radioBtnBetter">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_3">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255,85,0, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>A bit better than unknown</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QRadioButton" name="radioBtnLearning">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label_4">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(255,255,0, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>Still Learning</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="radioBtnNearlyKnown">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="label_5">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(170,255,0, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>I nearly know it</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QRadioButton" name="radioBtnKnown">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="label_6">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(0,255,0, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>Known</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0">
+         <widget class="QRadioButton" name="radioBtnIgnore">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="label_7">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(140,140,140, 0.6);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>Ignore</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QRadioButton" name="radioBtnWellKnown">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QLabel" name="label_8">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgba(131, 255, 207, 0.5);
+color: rgb(0,0,0);</string>
+          </property>
+          <property name="text">
+           <string>Well known</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QPushButton" name="pushButton">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Dict1</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="1">
+         <widget class="QPushButton" name="pushButton_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Dict2</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="text">
+           <string>Dict3</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_13">
+     <property name="text">
+      <string>Linked terms</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>EditTermDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>EditTermDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
