@@ -24,52 +24,45 @@ void EditTermDialog::chooseColor() {
     // }
 
     if(ui->radioBtnNew->isChecked()) {
-        QColor newColor(170,170,255,125);
-        color = newColor;
+        color = "new";
     }
     if(ui->radioBtnUnknown->isChecked()) {
-        QColor newColor(255,83,169,125);
-        color = newColor;
+        color = "unknown";
     }
     if(ui->radioBtnBetter->isChecked()) {
-        QColor newColor(255,85,0,125);
-        color = newColor;
+        color = "nearlyUnknown";
     }
     if(ui->radioBtnLearning->isChecked()) {
-        QColor newColor(255,255,0,125);
-        color = newColor;
+        color = "learning";
     }
     if(ui->radioBtnNearlyKnown->isChecked()) {
-        QColor newColor(170,255,0,125);
-        color = newColor;
+        color = "nearlyKnown";
     }
     if(ui->radioBtnKnown->isChecked()) {
-        QColor newColor(0,255,0,125);
-        color = newColor;
+        color = "known";
     }
     if(ui->radioBtnIgnore->isChecked()) {
-        QColor newColor(140,140,140,125);
-        color = newColor;
+        color = "ignored";
     }
     if(ui->radioBtnWellKnown->isChecked()) {
-        QColor newColor(170,170,255,0);
-        color = newColor;
+        color = "wellKnown";
     }
 
 }
 
-QColor EditTermDialog::selectedColor() const {
+QString EditTermDialog::selectedColor() {
+    chooseColor();
     return color;
 }
 
 void EditTermDialog::on_buttonBox_accepted()
 {
-    chooseColor();
+    //chooseColor();
 }
 
 
 void EditTermDialog::on_changeColorBtn_clicked()
 {
-    chooseColor();
+    //chooseColor();
 }
 

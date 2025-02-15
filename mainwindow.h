@@ -22,11 +22,11 @@ public:
 private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
-    void updateWordColor(const QString &word, const QColor &color);
+    void updateWordColor(const QString &word, const QString &color);
 
 private:
     Ui::MainWindow *ui;
     WordHighlighter* highlighter;
-    QList<WordData *> wordList;
+    //QList<WordData *> wordList;
 };
 #endif // MAINWINDOW_H

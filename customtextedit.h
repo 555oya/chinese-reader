@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 #include <QPlainTextEdit>
 #include <QDebug>
+#include <QRegularExpression>
 #include "edittermdialog.h"
 
 
@@ -16,7 +17,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override; // Обрабатываем клик
 
 signals:
-    void wordColorSelected(const QString &word, const QColor &color); // Добавляем сигнал
+    void wordColorSelected(const QString &word, const QString &color); // Добавляем сигнал
 
 };
 

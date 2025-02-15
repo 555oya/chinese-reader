@@ -5,13 +5,16 @@ void CustomTextEdit::mousePressEvent(QMouseEvent *event) {
     cursor.select(QTextCursor::WordUnderCursor); // Выбираем слово
 
     QString clickedWord = cursor.selectedText(); // Получаем выделенное слово
-    if (!clickedWord.isEmpty()) {
+    QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z]");
+    QString cleanedText = clickedWord;
+    cleanedText.remove(removeNonChineseRegex);
+    if (!cleanedText.isEmpty()) {
         qDebug() << "Clicked word:" << clickedWord; // Выводим в debug
         // Открываем диалог выбора цвета
         EditTermDialog dialog(clickedWord, this);
         if (dialog.exec() == QDialog::Accepted) {
-            QColor chosenColor = dialog.selectedColor();
-            if (chosenColor.isValid()) {
+            QString chosenColor = dialog.selectedColor();
+            if (!chosenColor.isEmpty()) {
                 emit wordColorSelected(clickedWord, chosenColor); // Сигнал для обновления цвета
             }
         }

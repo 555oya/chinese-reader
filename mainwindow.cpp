@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textEdit = customTextEdit;
     //ui->textEdit->setFontPointSize(16);
     QFont font("SimSun", 20);
-    font.setWordSpacing(-50);
     ui->textEdit->setFont(font);
     //customTextEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     highlighter = new WordHighlighter(customTextEdit->document());
@@ -55,7 +54,7 @@ void MainWindow::on_pushButton_clicked()
     QString parsedStr = text;
 
     //удаление всех служебных символов
-    QRegularExpression removeNonChineseRegex("[^一-龥 ]");
+    QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
     QString cleanedText = parsedStr;
     cleanedText.remove(removeNonChineseRegex);
 
@@ -68,16 +67,25 @@ void MainWindow::on_pushButton_clicked()
     wordsStrList.removeDuplicates();
 
     QList<WordData*> wordList;
+    QMap<QString, QString> wordColors;
 
     ui->textEdit->setPlainText(text);  // Устанавливаем текст один раз
-    // for (int i = 0; i < wordsStrList.size(); ++i) {
-    //     //wordList.append(new WordData(wordsStrList[i]));
-    //     QColor chosenColor(170,170,255,125);
-    //     updateWordColor(wordsStrList[i], chosenColor);
-    //     qDebug() << i << " out of " << wordsStrList.size();
-    // }
+    for (int i = 0; i < wordsStrList.size(); ++i) {
+        //wordList.append(new WordData(wordsStrList[i]));
 
-    //this->ui->textEdit->setPlainText();
+        wordColors.insert(wordsStrList[i], "new");
+
+        // QColor chosenColor(170,170,255,125);
+        // updateWordColor(wordsStrList[i], chosenColor);
+        // qDebug() << i << " out of " << wordsStrList.size();
+    }
+
+
+
+    highlighter->setWordColorRule(wordColors);
+
+    this->ui->textEdit->setPlainText(text);
+    highlighter->rehighlight();
 }
 
 
@@ -90,8 +98,12 @@ void MainWindow::on_pushButton_2_clicked()
     highlighter->rehighlight();
 }
 
-void MainWindow::updateWordColor(const QString &word, const QColor &color) {
-    qDebug() << "Changing color for word:" << word << " to " << color.name();
-    highlighter->setWordColor(word, color);
+void MainWindow::updateWordColor(const QString &word, const QString &color) {
+    qDebug() << "Changing color for word:" << word << " to " << color;
+    //highlighter->setWordColor(word, color);
+    QMap<QString, QString> updatedWord;
+    updatedWord.insert(word, color);
+    highlighter->changeWordColorRule(updatedWord);
+    highlighter->rehighlight();
 }
 

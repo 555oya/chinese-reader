@@ -4,6 +4,7 @@ C:/Users/anast/OneDrive/Desktop/qt\ projects/chinese-reader/build/Desktop_Qt_6_8
   C:/Qt/6.8.2/mingw_64/include/QtCore/QList \
   C:/Qt/6.8.2/mingw_64/include/QtCore/QObject \
   C:/Qt/6.8.2/mingw_64/include/QtCore/QRect \
+  C:/Qt/6.8.2/mingw_64/include/QtCore/QRegularExpression \
   C:/Qt/6.8.2/mingw_64/include/QtCore/QSize \
   C:/Qt/6.8.2/mingw_64/include/QtCore/QSizeF \
   C:/Qt/6.8.2/mingw_64/include/QtCore/q20functional.h \
@@ -86,6 +87,7 @@ C:/Users/anast/OneDrive/Desktop/qt\ projects/chinese-reader/build/Desktop_Qt_6_8
   C:/Qt/6.8.2/mingw_64/include/QtCore/qprocessordetection.h \
   C:/Qt/6.8.2/mingw_64/include/QtCore/qrect.h \
   C:/Qt/6.8.2/mingw_64/include/QtCore/qrefcount.h \
+  C:/Qt/6.8.2/mingw_64/include/QtCore/qregularexpression.h \
   C:/Qt/6.8.2/mingw_64/include/QtCore/qscopedpointer.h \
   C:/Qt/6.8.2/mingw_64/include/QtCore/qscopeguard.h \
   C:/Qt/6.8.2/mingw_64/include/QtCore/qset.h \

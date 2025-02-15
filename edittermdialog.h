@@ -16,16 +16,18 @@ public:
     explicit EditTermDialog(const QString &word, QWidget *parent = nullptr);
     ~EditTermDialog();
 
-    QColor selectedColor() const; // Метод для получения выбранного цвета
+    QString selectedColor(); // Метод для получения выбранного цвета
 
 private slots:
     void on_buttonBox_accepted();
     void on_changeColorBtn_clicked();
-    void chooseColor();
 
 private:
     Ui::EditTermDialog *ui;
-    QColor color; // Хранит выбранный цвет
+    QString color; // Хранит выбранный цвет
+    //QString color;
+
+    void chooseColor();
 };
 
 #endif // EDITTERMDIALOG_H

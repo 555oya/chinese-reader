@@ -11,12 +11,33 @@ class WordHighlighter : public QSyntaxHighlighter {
 public:
     explicit WordHighlighter(QTextDocument *parent = nullptr);
     void setWordColor(const QString &word, const QColor &color);
+    void setWordColorRule(const QMap<QString, QString> &colorMap);
+    void changeWordColorRule(const QMap<QString, QString> &colorMap);
 
 protected:
     void highlightBlock(const QString &text) override;
 
 private:
-    QMap<QString, QColor> wordColors;
+    struct HighlightingRule
+    {
+        QRegularExpression pattern;
+        QTextCharFormat format;
+    };
+    QList<HighlightingRule> highlightingRules;
+
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
+
+    QTextCharFormat newWordFormat;
+    QTextCharFormat unknownWordFormat;
+    QTextCharFormat nearlyUnknownWordFormat;
+    QTextCharFormat learningWordFormat;
+    QTextCharFormat nearlyKnownWordFormat;
+    QTextCharFormat knownWordFormat;
+    QTextCharFormat ignoredWordFormat;
+    QTextCharFormat wellKnownWordFormat;
+
+    QTextCharFormat checkStatus(const QString &val);
 };
 
 #endif // WORDHIGHLIGHTER_H
