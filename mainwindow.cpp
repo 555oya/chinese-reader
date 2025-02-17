@@ -21,14 +21,23 @@ MainWindow::MainWindow(QWidget *parent)
 
     highlighter = new WordHighlighter(customTextEdit->document());
 
+    currentText = Text();
+
     ui->checkBoxHideSpaces->setCheckState(Qt::Checked);
 
     connect(customTextEdit, &CustomTextEdit::wordDataHasChanged, this, &MainWindow::updateWordData);
+    connect(customTextEdit, &CustomTextEdit::textHasChanged, this, &MainWindow::updateText);
+
     changesInWord = false;
 
-    filepath = "C:/Users/anast/OneDrive/Documents/chinese-reader/terms/term-dict.csv";
+    defaultOpenFileFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/chinese-reader/texts";
+    //defaultOpenFileFolderPath = "";
+    QString termDictFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/chinese-reader/terms/term-dict.csv";
 
-    loadWordsFromCSV(filepath);
+    if(QFile::exists(termDictFilePath))
+        loadWordsFromCSV(termDictFilePath);
+    else
+        qDebug() << termDictFilePath;
 }
 
 MainWindow::~MainWindow()
@@ -46,62 +55,83 @@ QSyntaxHighlighter *MainWindow::getHighlighter()
     return highlighter;
 }
 
-void MainWindow::parseText(QString text) {
-    QString parsedStr = text;
-
-    //удаление всех служебных символов
-    QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
-    // QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z \u200B]");
-    QString cleanedText = parsedStr;
-    cleanedText.remove(removeNonChineseRegex);
-
-    // 2. Сжимаем несколько пробелов в один
-    QRegularExpression multipleSpacesRegex("\\s+");
-    cleanedText.replace(multipleSpacesRegex, " ");
-    cleanedText = cleanedText.trimmed(); //удаляем пробелы в самом начале и в конце
-
-    QStringList wordsStrList = cleanedText.split(" ");
-
-    wordsStrList.removeDuplicates();
-
-    QMap<QString, QString> wordColors;
-
-    for (int i = 0; i < wordsStrList.size(); ++i) {
-        if(wordHashList.contains(wordsStrList[i]))
-            wordColors.insert(wordsStrList[i], wordHashList.find(wordsStrList[i])->getStatus());
-        else
-            wordColors.insert(wordsStrList[i], "new");
-    }
-    highlighter->setWordColorRule(wordColors);
+Text &MainWindow::getCurrentText()
+{
+    return currentText;
 }
+
+// void MainWindow::parseText(QString text) {
+//     QString parsedStr = text;
+
+//     //удаление всех служебных символов
+//     QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
+//     QString cleanedText = parsedStr;
+//     cleanedText.remove(removeNonChineseRegex);
+
+//     // 2. Сжимаем несколько пробелов в один
+//     QRegularExpression multipleSpacesRegex("\\s+");
+//     cleanedText.replace(multipleSpacesRegex, " ");
+//     cleanedText = cleanedText.trimmed(); //удаляем пробелы в самом начале и в конце
+
+//     QStringList wordsStrList = cleanedText.split(" ");
+
+//     wordsStrList.removeDuplicates();
+
+//     QMap<QString, QString> wordColors;
+
+//     for (int i = 0; i < wordsStrList.size(); ++i) {
+//         if(wordHashList.contains(wordsStrList[i]))
+//             wordColors.insert(wordsStrList[i], wordHashList.find(wordsStrList[i])->getStatus());
+//         else
+//             wordColors.insert(wordsStrList[i], "new");
+//     }
+//     highlighter->setWordColorRule(wordColors);
+// }
+
+// void MainWindow::parseText(QString text) {
+
+//     highlighter->setWordColorRule(currentText.getWordColors());
+// }
+
+// void MainWindow::on_pushButton_clicked()
+// {
+//     //Open file with explorer
+//     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), defaultOpenFileFolderPath, tr("Text files (*.txt)"));
+//     QFile file(fileName);
+//     if (!file.exists()) { // Checks if exists
+//         qDebug("File doesn't exist!");
+//         return;
+//     }
+//     if(!file.open(QIODevice::ReadOnly)) { //checks if opened
+//         qDebug("Could not open the file");
+//     }
+
+//     QTextStream reading_stream(&file); //open stream for reading
+//     QString text = reading_stream.readAll();
+//     file.close();
+
+//     parseText(text);
+
+//     //убираем пробелы до и после \n
+//     QRegularExpression regex("[ ]*(\n)[ ]*");
+//     text.replace(regex, "\\1");
+//     //убираем пробелы между знаками пунктуации
+//     QRegularExpression regex2("(?<![一-龥a-zA-Z]) (?![一-龥a-zA-Z])");
+//     text.remove(regex2);
+
+//     this->ui->textEdit->setPlainText(text);
+
+//     highlighter->rehighlight();
+// }
 
 void MainWindow::on_pushButton_clicked()
 {
-    //Open file with explorer
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "C:/Users/anast/OneDrive/Documents/chinese-reader/texts", tr("Text files (*.txt)"));
-    QFile file(fileName);
-    if (!file.exists()) { // Checks if exists
-        qDebug("File doesn't exist!");
-        return;
-    }
-    if(!file.open(QIODevice::ReadOnly)) { //checks if opened
-        qDebug("Could not open the file");
-    }
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), defaultOpenFileFolderPath, tr("Text files (*.txt)"));
+    currentText = Text(true, fileName, wordHashList);
 
-    QTextStream reading_stream(&file); //open stream for reading
-    QString text = reading_stream.readAll();
-    file.close();
+    highlighter->setWordColorRule(currentText.getWordColors());
 
-    parseText(text);
-
-    //убираем пробелы до и после \n
-    QRegularExpression regex("[ ]*(\n)[ ]*");
-    text.replace(regex, "\\1");
-    //убираем пробелы между знаками пунктуации
-    QRegularExpression regex2("(?<![一-龥a-zA-Z]) (?![一-龥a-zA-Z])");
-    text.remove(regex2);
-
-    this->ui->textEdit->setPlainText(text);
+    this->ui->textEdit->setPlainText(currentText.getTextStr());
 
     highlighter->rehighlight();
 }
@@ -116,6 +146,13 @@ void MainWindow::updateWordData(const QString &word, const QString &color, WordD
     wordHashList.insert(word, currentWord);
     if(!changesInWord)
         changesInWord = true;
+}
+
+void MainWindow::updateText(const QString &newText)
+{
+    currentText = Text(false, newText, wordHashList);
+    highlighter->setWordColorRule(currentText.getWordColors());
+    highlighter->rehighlight();
 }
 
 void MainWindow::saveWordsToCSV(const QString& filePath) {
@@ -207,7 +244,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     if(changesInWord){
     ExitDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
-        saveWordsToCSV(filepath);
+        saveWordsToCSV(termDictFilePath);
         QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
         event->accept();
     }
@@ -219,40 +256,49 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::on_saveButton_clicked()
 {
-    saveWordsToCSV(filepath);
+    saveWordsToCSV(termDictFilePath);
     QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
     changesInWord = false;
 }
 
 
+// void MainWindow::on_pushButton_2_clicked()
+// {
+//     QString text = ui->textEdit->toPlainText();
+//     cppjieba::Jieba jieba;
+//     vector<string> words;
+//     vector<cppjieba::Word> jiebawords;
+//     string s;
+//     string result;
+
+//     s = text.toStdString();
+//     jieba.Cut(s, words, true);
+
+//     result = limonp::Join(words.begin(), words.end(), " ");
+//     QString textQString = QString::fromStdString(result);
+
+//     //убираем пробелы до и после \n
+//     QRegularExpression regex("[ ]*(\n)[ ]*");
+//     textQString.replace(regex, "\\1");
+//     //убираем пробелы между знаками пунктуации
+//     QRegularExpression regex2("(?<![^一-龥a-zA-Z]) (?![^一-龥a-zA-Z])");
+//     textQString.remove(regex2);
+
+//     ui->textEdit->setPlainText(textQString);
+
+//     parseText(textQString);
+//     highlighter->rehighlight();
+// }
+
 void MainWindow::on_pushButton_2_clicked()
 {
-    QString text = ui->textEdit->toPlainText();
-    cppjieba::Jieba jieba;
-    vector<string> words;
-    vector<cppjieba::Word> jiebawords;
-    string s;
-    string result;
+    currentText.cutToWords(wordHashList);
+    highlighter->setWordColorRule(currentText.getWordColors());
 
-    s = text.toStdString();
-    jieba.Cut(s, words, true);
+    this->ui->textEdit->setPlainText(currentText.getTextStr());
 
-    result = limonp::Join(words.begin(), words.end(), " ");
-    QString textQString = QString::fromStdString(result);
-
-    //убираем пробелы до и после \n
-    QRegularExpression regex("[ ]*(\n)[ ]*");
-    textQString.replace(regex, "\\1");
-    //убираем пробелы между знаками пунктуации
-    QRegularExpression regex2("(?<![^一-龥a-zA-Z]) (?![^一-龥a-zA-Z])");
-    textQString.remove(regex2);
-
-    ui->textEdit->setPlainText(textQString);
-
-    parseText(textQString);
     highlighter->rehighlight();
 }
-
 
 void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1)
 {

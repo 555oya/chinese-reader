@@ -21,6 +21,9 @@ public:
         setMouseTracking(true); // Включаем отслеживание движения мыши
         //setCursorWidth(0);
         setReadOnly(true);
+        QFont newfont("SimSun", 20);
+        font = newfont;
+        setFont(font);
     }
 
 private slots:
@@ -37,10 +40,13 @@ protected:
 signals:
     //void wordColorSelected(const QString &word, const QString &color); // Добавляем сигнал
     void wordDataHasChanged(const QString &word, const QString &color, WordData &currentWord);
+    void textHasChanged(const QString &newText);
 private:
     MainWindow *mainWindow; // Указатель на MainWindow
     QString lastHoveredWord; // Последнее выделенное слово
     QContextMenuEvent *rmbEvent;
+
+    QFont font;
 };
 
 

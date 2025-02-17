@@ -31,6 +31,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         edittermdialog.h edittermdialog.cpp edittermdialog.ui
         worddata.h worddata.cpp
         exitdialog.h exitdialog.cpp exitdialog.ui
+        cppjieba/dict/pos_dict/char_state_tab.utf8 cppjieba/dict/pos_dict/prob_emit.utf8 cppjieba/dict/pos_dict/prob_start.utf8 cppjieba/dict/pos_dict/prob_trans.utf8 cppjieba/dict/hmm_model.utf8 cppjieba/dict/idf.utf8 cppjieba/dict/jieba.dict.utf8 cppjieba/dict/README.md cppjieba/dict/stop_words.utf8 cppjieba/dict/user.dict.utf8
+        text.h text.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET chinese-reader APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

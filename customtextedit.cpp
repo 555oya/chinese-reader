@@ -8,8 +8,9 @@ void CustomTextEdit::insertSpace()
     QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
     cursor.insertText(" ");
     setTextCursor(cursor);
-    mainWindow->parseText(this->toPlainText());
-    mainWindow->getHighlighter()->rehighlight();
+    emit(textHasChanged(this->toPlainText()));
+    // mainWindow->getCurrentText().setTextStr(this->toPlainText());
+    // mainWindow->getHighlighter()->rehighlight();
 }
 
 void CustomTextEdit::joinWords()
@@ -19,8 +20,9 @@ void CustomTextEdit::joinWords()
     QRegularExpression regex2("(?<![^一-龥a-zA-Z]) (?![^一-龥a-zA-Z])");
     selectedText.remove(regex2);
     cursor.insertText(selectedText);
-    mainWindow->parseText(this->toPlainText());
-    mainWindow->getHighlighter()->rehighlight();
+    emit(textHasChanged(this->toPlainText()));
+    // mainWindow->parseText(this->toPlainText());
+    // mainWindow->getHighlighter()->rehighlight();
 }
 
 void CustomTextEdit::useGoogle()
@@ -64,8 +66,6 @@ void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
             }
         }
     }
-
-    //QPlainTextEdit::mouseDoubleClickEvent(event); // Передаём событие дальше
 }
 
 void CustomTextEdit::mouseMoveEvent(QMouseEvent *event) {
@@ -126,6 +126,12 @@ void CustomTextEdit::contextMenuEvent(QContextMenuEvent *event)
         menu->actions().at(5)->setEnabled(false);
         menu->actions().at(9)->setEnabled(false);
         menu->actions().at(10)->setEnabled(false);
+    }
+
+    if(document()->isEmpty()){
+        for (auto &action : menu->actions()) {
+            action->setEnabled(false);
+        }
     }
 
     menu->exec(event->globalPos());
