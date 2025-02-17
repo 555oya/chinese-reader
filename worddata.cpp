@@ -1,17 +1,12 @@
 #include "worddata.h"
 
-WordData::WordData(const QString& word, const QString& translation, const QString& romanization,
+WordData::WordData(const QString& translation, const QString& romanization,
                    const QString& sentence, const QString& status, const QStringList& linkedTerms)
-    : word(word), translation(translation), romanization(romanization),
+    : translation(translation), romanization(romanization),
     sentence(sentence), status(status), linkedTerms(linkedTerms) {}
 
-WordData::WordData(const QString& word)
-    : word(word) {
-    status = "New";
-}
+WordData::WordData() {
 
-QString WordData::getWord() const {
-    return word;
 }
 
 QString WordData::getTranslation() const {
@@ -36,6 +31,18 @@ QStringList WordData::getLinkedTerms() const {
 
 void WordData::setStatus(const QString& newStatus) {
     status = newStatus;
+}
+
+void WordData::setRomanization(const QString& newRomanization) {
+    romanization = newRomanization;
+}
+
+void WordData::setSentence(const QString& newSentence) {
+    sentence = newSentence;
+}
+
+void WordData::setTranslation(const QString& newTranslation) {
+    translation = newTranslation;
 }
 
 void WordData::setLinkedTerms(const QStringList& newLinkedTerms) {

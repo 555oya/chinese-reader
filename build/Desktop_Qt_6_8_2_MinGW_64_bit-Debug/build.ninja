@@ -113,6 +113,14 @@ build CMakeFiles/chinese-reader.dir/worddata.cpp.obj: CXX_COMPILER__chinese-read
   OBJECT_DIR = CMakeFiles\chinese-reader.dir
   OBJECT_FILE_DIR = CMakeFiles\chinese-reader.dir
 
+build CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj: CXX_COMPILER__chinese-reader_unscanned_Debug C$:/Users/anast/OneDrive/Desktop/qt$ projects/chinese-reader/exitdialog.cpp || cmake_object_order_depends_target_chinese-reader
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\chinese-reader.dir\exitdialog.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I"C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/include" -isystem C:/Qt/6.8.2/mingw_64/include/QtCore -isystem C:/Qt/6.8.2/mingw_64/include -isystem C:/Qt/6.8.2/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.8.2/mingw_64/include/QtWidgets -isystem C:/Qt/6.8.2/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\chinese-reader.dir
+  OBJECT_FILE_DIR = CMakeFiles\chinese-reader.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target chinese-reader
@@ -121,7 +129,7 @@ build CMakeFiles/chinese-reader.dir/worddata.cpp.obj: CXX_COMPILER__chinese-read
 #############################################
 # Link the executable chinese-reader.exe
 
-build chinese-reader.exe: CXX_EXECUTABLE_LINKER__chinese-reader_Debug CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj CMakeFiles/chinese-reader.dir/main.cpp.obj CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj CMakeFiles/chinese-reader.dir/terms.cpp.obj CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj CMakeFiles/chinese-reader.dir/worddata.cpp.obj | C$:/Qt/6.8.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.8.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.8.2/mingw_64/lib/libQt6Core.a C$:/Qt/6.8.2/mingw_64/lib/libQt6EntryPoint.a || chinese-reader_autogen chinese-reader_autogen_timestamp_deps
+build chinese-reader.exe: CXX_EXECUTABLE_LINKER__chinese-reader_Debug CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj CMakeFiles/chinese-reader.dir/main.cpp.obj CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj CMakeFiles/chinese-reader.dir/terms.cpp.obj CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj CMakeFiles/chinese-reader.dir/worddata.cpp.obj CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj | C$:/Qt/6.8.2/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.8.2/mingw_64/lib/libQt6Gui.a C$:/Qt/6.8.2/mingw_64/lib/libQt6Core.a C$:/Qt/6.8.2/mingw_64/lib/libQt6EntryPoint.a || chinese-reader_autogen chinese-reader_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.8.2/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.8.2/mingw_64/lib/libQt6Gui.a  C:/Qt/6.8.2/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.8.2/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -208,7 +216,7 @@ build chinese-reader_autogen_timestamp_deps: phony
 #############################################
 # Utility command for chinese-reader_autogen
 
-build chinese-reader_autogen: phony CMakeFiles/chinese-reader_autogen chinese-reader_autogen/include/ui_mainwindow.h chinese-reader_autogen/include/ui_edittermdialog.h chinese-reader_autogen/timestamp chinese-reader_autogen/mocs_compilation.cpp chinese-reader_autogen_timestamp_deps
+build chinese-reader_autogen: phony CMakeFiles/chinese-reader_autogen chinese-reader_autogen/include/ui_mainwindow.h chinese-reader_autogen/include/ui_edittermdialog.h chinese-reader_autogen/include/ui_exitdialog.h chinese-reader_autogen/timestamp chinese-reader_autogen/mocs_compilation.cpp chinese-reader_autogen_timestamp_deps
 
 
 #############################################
@@ -225,7 +233,7 @@ build chinese-reader_autogen/timestamp chinese-reader_autogen/mocs_compilation.c
 #############################################
 # Phony custom command for CMakeFiles\chinese-reader_autogen
 
-build CMakeFiles/chinese-reader_autogen chinese-reader_autogen/include/ui_mainwindow.h chinese-reader_autogen/include/ui_edittermdialog.h | ${cmake_ninja_workdir}CMakeFiles/chinese-reader_autogen ${cmake_ninja_workdir}chinese-reader_autogen/include/ui_mainwindow.h ${cmake_ninja_workdir}chinese-reader_autogen/include/ui_edittermdialog.h: phony chinese-reader_autogen/timestamp || chinese-reader_autogen_timestamp_deps
+build CMakeFiles/chinese-reader_autogen chinese-reader_autogen/include/ui_mainwindow.h chinese-reader_autogen/include/ui_edittermdialog.h chinese-reader_autogen/include/ui_exitdialog.h | ${cmake_ninja_workdir}CMakeFiles/chinese-reader_autogen ${cmake_ninja_workdir}chinese-reader_autogen/include/ui_mainwindow.h ${cmake_ninja_workdir}chinese-reader_autogen/include/ui_edittermdialog.h ${cmake_ninja_workdir}chinese-reader_autogen/include/ui_exitdialog.h: phony chinese-reader_autogen/timestamp || chinese-reader_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.

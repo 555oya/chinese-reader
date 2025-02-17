@@ -8,7 +8,7 @@ namespace cppjieba {
 
 class Jieba {
  public:
-  Jieba(const string& dict_path = "", 
+  Jieba(const string& dict_path = "",
         const string& model_path = "",
         const string& user_dict_path = "", 
         const string& idf_path = "", 
@@ -143,9 +143,9 @@ class Jieba {
   static string getPath(const string& path, const string& default_file) {
     if (path.empty()) {
       string current_dir = getCurrentDirectory();
-      string parent_dir = current_dir.substr(0, current_dir.find_last_of("/\\"));
-      string grandparent_dir = parent_dir.substr(0, parent_dir.find_last_of("/\\"));
-      return pathJoin(pathJoin(grandparent_dir, "dict"), default_file);
+      //string parent_dir = current_dir.substr(0, current_dir.find_last_of("/\\"));
+      //string grandparent_dir = parent_dir.substr(0, parent_dir.find_last_of("/\\"));
+      return pathJoin(pathJoin(current_dir, "dict"), default_file);
     }
     return path;
   }

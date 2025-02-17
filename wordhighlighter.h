@@ -13,6 +13,7 @@ public:
     void setWordColor(const QString &word, const QColor &color);
     void setWordColorRule(const QMap<QString, QString> &colorMap);
     void changeWordColorRule(const QMap<QString, QString> &colorMap);
+    void setSpaceSize(int size);
 
 protected:
     void highlightBlock(const QString &text) override;
@@ -24,6 +25,9 @@ private:
         QTextCharFormat format;
     };
     QList<HighlightingRule> highlightingRules;
+
+    int spaceSize;
+
 
     QRegularExpression commentStartExpression;
     QRegularExpression commentEndExpression;

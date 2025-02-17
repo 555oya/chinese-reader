@@ -15,7 +15,11 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="4" column="1">
-    <widget class="QPlainTextEdit" name="plainTextEdit_3"/>
+    <widget class="QPlainTextEdit" name="exampleTextEdit">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::ClickFocus</enum>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_10">
@@ -32,7 +36,7 @@
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QPlainTextEdit" name="plainTextEdit"/>
+    <widget class="QPlainTextEdit" name="pinyinTextEdit"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label_12">
@@ -42,7 +46,11 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QPlainTextEdit" name="plainTextEdit_2"/>
+    <widget class="QPlainTextEdit" name="meaningTextEdit">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::ClickFocus</enum>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="label_11">
@@ -77,7 +85,11 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPlainTextEdit" name="plainTextEdit_4"/>
+    <widget class="QPlainTextEdit" name="linkedTermsTextEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item row="1" column="2" rowspan="4">
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -93,18 +105,10 @@
         <string>Status</string>
        </property>
        <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
-         <widget class="QRadioButton" name="radioBtnNew">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="1">
          <widget class="QLabel" name="label">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(170,170,255, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(170,170,255, 0.5);</string>
           </property>
           <property name="text">
            <string>New</string>
@@ -121,8 +125,7 @@ color: rgb(0,0,0);</string>
         <item row="1" column="1">
          <widget class="QLabel" name="label_2">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(255,83,169, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(255,83,169, 0.5);</string>
           </property>
           <property name="text">
            <string>Unknown</string>
@@ -139,8 +142,7 @@ color: rgb(0,0,0);</string>
         <item row="2" column="1">
          <widget class="QLabel" name="label_3">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(255,85,0, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(255,85,0, 0.5);</string>
           </property>
           <property name="text">
            <string>A bit better than unknown</string>
@@ -157,8 +159,7 @@ color: rgb(0,0,0);</string>
         <item row="3" column="1">
          <widget class="QLabel" name="label_4">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(255,255,0, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(255,255,0, 0.5);</string>
           </property>
           <property name="text">
            <string>Still Learning</string>
@@ -175,8 +176,7 @@ color: rgb(0,0,0);</string>
         <item row="4" column="1">
          <widget class="QLabel" name="label_5">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(170,255,0, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(170,255,0, 0.5);</string>
           </property>
           <property name="text">
            <string>I nearly know it</string>
@@ -193,8 +193,7 @@ color: rgb(0,0,0);</string>
         <item row="5" column="1">
          <widget class="QLabel" name="label_6">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(0,255,0, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(0,255,0, 0.5);</string>
           </property>
           <property name="text">
            <string>Known</string>
@@ -211,8 +210,7 @@ color: rgb(0,0,0);</string>
         <item row="6" column="1">
          <widget class="QLabel" name="label_7">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(140,140,140, 0.6);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(140,140,140, 0.5);</string>
           </property>
           <property name="text">
            <string>Ignore</string>
@@ -229,8 +227,8 @@ color: rgb(0,0,0);</string>
         <item row="7" column="1">
          <widget class="QLabel" name="label_8">
           <property name="styleSheet">
-           <string notr="true">background-color: rgba(131, 255, 207, 0.5);
-color: rgb(0,0,0);</string>
+           <string notr="true">background-color: rgba(131, 255, 207, 0);
+</string>
           </property>
           <property name="text">
            <string>Well known</string>
@@ -238,7 +236,7 @@ color: rgb(0,0,0);</string>
          </widget>
         </item>
         <item row="8" column="1">
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="dict1Btn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -251,7 +249,7 @@ color: rgb(0,0,0);</string>
          </widget>
         </item>
         <item row="9" column="1">
-         <widget class="QPushButton" name="pushButton_2">
+         <widget class="QPushButton" name="dict2Btn">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -264,7 +262,7 @@ color: rgb(0,0,0);</string>
          </widget>
         </item>
         <item row="10" column="1">
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="dict3Btn">
           <property name="text">
            <string>Dict3</string>
           </property>

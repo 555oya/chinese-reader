@@ -1,0 +1,3 @@
+Начинается загрузка из файла: C:/Users/anast/OneDrive/Documents/chinese-reader/terms/term-dict.csv
+Загружено слово: 甚至 | Статус: unknown
+Загрузка завершена. Всего загружено: 1 слов.

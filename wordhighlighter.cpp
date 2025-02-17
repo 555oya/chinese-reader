@@ -11,6 +11,7 @@ WordHighlighter::WordHighlighter(QTextDocument *parent) : QSyntaxHighlighter(par
     ignoredWordFormat.setBackground(QColor(140,140,140,125));
     wellKnownWordFormat.setBackground(QColor(170,170,255,0));
 
+    spaceSize = 20;
 }
 
 void WordHighlighter::setWordColor(const QString &word, const QColor &color) {
@@ -47,73 +48,39 @@ QTextCharFormat WordHighlighter::checkStatus(const QString &val) {
 }
 
 void WordHighlighter::changeWordColorRule(const QMap<QString, QString> &colorMap) {
-    // for (auto it = colorMap.begin(); it != colorMap.end(); ++it) {
-    //     qDebug() << "Looking for " << it.key() << " in rules " << it.value();
-    //     for (auto rule = highlightingRules.begin(); rule != highlightingRules.end(); ++rule) {
-    //         QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
-    //         if (rule->pattern == regex){
-    //             rule->format = checkStatus(it.value());
-    //             qDebug() << "Changed word " << regex << " status to " <<  rule->format;
-    //         }
-    //     }
-    // }
-    // rehighlight();
-
     for (auto it = colorMap.begin(); it != colorMap.end(); ++it) {
 
         for (auto rule = highlightingRules.begin(); rule != highlightingRules.end(); ++rule) {
             QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
-
+            // QRegularExpression regex(QString(R"((?:^|[\s\x{200B}])%1(?=[\s\x{200B}]|$))").arg(QRegularExpression::escape(it.key())),
+            //                          QRegularExpression::UseUnicodePropertiesOption);
             if (rule->pattern == regex) {
                 rule->format = checkStatus(it.value());
             }
         }
     }
+}
 
-    for (auto rule2 = highlightingRules.begin(); rule2 != highlightingRules.end(); ++rule2) {
-        QString color;
-
-        if (rule2->format == newWordFormat)
-            color = "new";
-        else if (rule2->format == unknownWordFormat)
-            color = "unknown";
-    }
+void WordHighlighter::setSpaceSize(int size)
+{
+    spaceSize = size;
 }
 
 void WordHighlighter::setWordColorRule(const QMap<QString, QString> &colorMap) {
     HighlightingRule rule;
 
     for (auto it = colorMap.begin(); it != colorMap.end(); ++it) {
-        //qDebug() << "Set color rule " << it.value() << " for " << it.key();
         QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
-        //QRegularExpression regex(QString(R"(\\b%1\\b)").arg(QRegularExpression::escape(it.key())));
-        //qDebug() << regex;
+        // QRegularExpression regex(QString(R"((?:^|[\s\x{200B}])%1(?=[\s\x{200B}]|$))").arg(QRegularExpression::escape(it.key())),
+        //                          QRegularExpression::UseUnicodePropertiesOption);
         rule.pattern = regex;
         rule.format = checkStatus(it.value());
         highlightingRules.append(rule);
     }
-    //rehighlight(); // Перерисовываем текст
 }
 
 void WordHighlighter::highlightBlock(const QString &text) {
-
-    // for (auto it = wordColors.begin(); it != wordColors.end(); ++it) {
-    //     QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key()))); // for regular spaces
-
-    //     QRegularExpressionMatchIterator matches = regex.globalMatch(text);
-
-    //     while (matches.hasNext()) {
-    //         QRegularExpressionMatch match = matches.next();
-    //         QTextCharFormat format;
-    //         format.setBackground(it.value());
-    //         setFormat(match.capturedStart(), match.capturedLength(), format);
-    //     }
-    // }
-
     for (const HighlightingRule &rule : std::as_const(highlightingRules)) {
-        //QRegularExpression regex(QString(R"((\\b)%1(\\b))").arg(QRegularExpression::escape("第一章"))); // for regular spaces
-        //QRegularExpressionMatchIterator matchIterator = regex.globalMatch(text);
-
         QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
         while (matchIterator.hasNext()) {
             QRegularExpressionMatch match = matchIterator.next();
@@ -121,4 +88,14 @@ void WordHighlighter::highlightBlock(const QString &text) {
         }
     }
 
+    QTextCharFormat fmt;
+    fmt.setFontPointSize(spaceSize);
+
+    QRegularExpression whitespaceRegex(" ");
+    QRegularExpressionMatchIterator wsMatchIterator = whitespaceRegex.globalMatch(text);
+
+    while (wsMatchIterator.hasNext()) {
+        QRegularExpressionMatch match = wsMatchIterator.next();
+        setFormat(match.capturedStart(), match.capturedLength(), fmt);
+    }
 }

@@ -1,79 +1,73 @@
 # ninja log v6
-9	838	7612656248973290	build.ninja	19e32701da4c7d
 1701	1959	7612656267221541	CMakeFiles/chinese-reader.dir/terms.cpp.obj	8b8019bc2c5fd0a7
-60	350	7613223207370132	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-60	350	7613223207370132	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-1471	6374	7613210663026408	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
-60	350	7613223207370132	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-1713	7382	7612656267356697	CMakeFiles/chinese-reader.dir/worddata.cpp.obj	15ff358a8fcbb09a
-60	350	7613223207370132	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-1449	6872	7613210662818950	CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj	439bbd6186c94bbb
-1453	6331	7613210662870206	CMakeFiles/chinese-reader.dir/main.cpp.obj	da2b53d2b589ab3c
-363	4890	7613223210398443	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-357	5230	7613223210398443	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-352	5818	7613223210356811	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5819	6348	7613223265027782	chinese-reader.exe	e925daf1a9c557c5
-48	326	7613225367482850	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-48	326	7613225367482850	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-48	326	7613225367482850	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-48	326	7613225367482850	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-338	4919	7613225370519592	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-333	5256	7613225370469522	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-328	5954	7613225370414404	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5954	6479	7613225426684853	chinese-reader.exe	e925daf1a9c557c5
-52	345	7613226257484616	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-52	345	7613226257484616	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-52	345	7613226257484616	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-52	345	7613226257484616	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-360	4643	7613226260511808	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-354	4923	7613226260511808	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-347	5664	7613226260443319	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5664	6187	7613226313616603	chinese-reader.exe	e925daf1a9c557c5
-48	333	7613226598907721	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-48	333	7613226598907721	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-48	333	7613226598907721	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-48	333	7613226598907721	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-347	5382	7613226601979881	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-341	5792	7613226601979881	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-336	6532	7613226601928558	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-6533	7040	7613226663898749	chinese-reader.exe	e925daf1a9c557c5
-47	333	7613229912004067	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-47	333	7613229912004067	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-47	333	7613229912004067	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-47	333	7613229912004067	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-347	4638	7613229915125119	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-341	5060	7613229915065085	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-336	5679	7613229915015083	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5680	6214	7613229968458574	chinese-reader.exe	e925daf1a9c557c5
-49	323	7613233912773412	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-49	323	7613233912773412	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-49	323	7613233912773412	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-49	323	7613233912773412	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-337	5793	7613233915669056	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-331	6311	7613233915603889	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-325	7093	7613233915553889	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-7093	7649	7613233983237213	chinese-reader.exe	e925daf1a9c557c5
-45	292	7613235652840235	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-45	292	7613235652840235	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-45	292	7613235652840235	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-45	292	7613235652840235	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-303	4141	7613235655514478	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-298	4508	7613235655454487	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-294	5111	7613235655414462	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5111	5619	7613235703590032	chinese-reader.exe	e925daf1a9c557c5
-56	337	7613236683312568	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-56	337	7613236683312568	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-56	337	7613236683312568	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-56	337	7613236683312568	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-351	4680	7613236686344417	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-346	5136	7613236686284426	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
-340	5833	7613236686224439	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-5833	6347	7613236741163535	chinese-reader.exe	e925daf1a9c557c5
-54	326	7613239266879299	chinese-reader_autogen/timestamp	a628d0928e03bdc0
-54	326	7613239266879299	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-54	326	7613239266879299	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
-54	326	7613239266879299	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
-333	4806	7613239269706286	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
-338	5124	7613239269756301	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
-327	6324	7613239269651199	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
-6325	6856	7613239329519140	chinese-reader.exe	e925daf1a9c557c5
+9	838	7613393711691769	build.ninja	19e32701da4c7d
+49	330	7614029671476286	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+337	5671	7614029674456884	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+49	330	7614029671476286	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+1208	4151	7613334185193657	CMakeFiles/chinese-reader.dir/worddata.cpp.obj	15ff358a8fcbb09a
+49	330	7614029671476286	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+1788	8659	7613995497578697	CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj	439bbd6186c94bbb
+49	330	7614029671476286	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+2069	10137	7613527136864619	CMakeFiles/chinese-reader.dir/main.cpp.obj	da2b53d2b589ab3c
+342	5976	7614029674456884	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+265	4939	7613279842036464	CMakeFiles/chinese-reader.dir/wordhighlighter.cpp.obj	b11dcba385cbc732
+331	7067	7614029674426801	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+7067	7672	7614029741653194	chinese-reader.exe	2abe5c02c36e5bb1
+347	4968	7614029674456884	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+44	309	7614031998305560	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+44	309	7614031998305560	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+44	309	7614031998305560	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+44	309	7614031998305560	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+327	4148	7614032001160309	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+315	4674	7614032001004055	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+321	4858	7614032001160309	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+311	5765	7614032001004055	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+5765	6394	7614032055590626	chinese-reader.exe	2abe5c02c36e5bb1
+23	306	7614034216116504	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+23	306	7614034216116504	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+23	306	7614034216116504	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+23	306	7614034216116504	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+318	4871	7614034219013541	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+313	5761	7614034219013541	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+308	7048	7614034218857311	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+7049	7721	7614034286347439	chinese-reader.exe	2abe5c02c36e5bb1
+49	339	7614036982156763	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+49	339	7614036982156763	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+49	339	7614036982156763	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+49	339	7614036982156763	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+357	4503	7614036985293671	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+346	5079	7614036985137419	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+351	5540	7614036985137419	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+341	6724	7614036985137419	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+6725	7410	7614037049006979	chinese-reader.exe	2abe5c02c36e5bb1
+48	334	7614037518439628	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+48	334	7614037518439628	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+48	334	7614037518439628	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+48	334	7614037518439628	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+352	5018	7614037521447760	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+340	5716	7614037521291494	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+346	6070	7614037521447760	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+335	7374	7614037521291494	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+7374	7971	7614037591738557	chinese-reader.exe	2abe5c02c36e5bb1
+52	1626	7614071730025215	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+52	1626	7614071730025215	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+52	1626	7614071730025215	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+52	1626	7614071730025215	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+1655	6959	7614071731435441	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+1650	8752	7614071731435441	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+1633	9704	7614071731279195	CMakeFiles/chinese-reader.dir/main.cpp.obj	da2b53d2b589ab3c
+1628	9982	7614071731122911	CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj	439bbd6186c94bbb
+1643	10080	7614071731279195	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+1638	13133	7614071731279195	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+13134	15282	7614071846268450	chinese-reader.exe	2abe5c02c36e5bb1
+95	2420	7614073785333674	chinese-reader_autogen/timestamp	a628d0928e03bdc0
+95	2420	7614073785333674	chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+95	2420	7614073785333674	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/timestamp	a628d0928e03bdc0
+95	2420	7614073785333674	C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/build/Desktop_Qt_6_8_2_MinGW_64_bit-Debug/chinese-reader_autogen/mocs_compilation.cpp	a628d0928e03bdc0
+2455	8897	7614073788631853	CMakeFiles/chinese-reader.dir/exitdialog.cpp.obj	71cee394e94f8bd
+2449	10044	7614073788475526	CMakeFiles/chinese-reader.dir/edittermdialog.cpp.obj	e38ab4dde2fd0299
+2430	11202	7614073788340404	CMakeFiles/chinese-reader.dir/main.cpp.obj	da2b53d2b589ab3c
+2443	11377	7614073788475526	CMakeFiles/chinese-reader.dir/customtextedit.cpp.obj	ced9f141fe8a3171
+2422	11826	7614073788315218	CMakeFiles/chinese-reader.dir/chinese-reader_autogen/mocs_compilation.cpp.obj	439bbd6186c94bbb
+2436	14488	7614073788340404	CMakeFiles/chinese-reader.dir/mainwindow.cpp.obj	b91df10c3a8f47c2
+14488	16613	7614073908850677	chinese-reader.exe	2abe5c02c36e5bb1

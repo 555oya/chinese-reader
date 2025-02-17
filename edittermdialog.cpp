@@ -1,5 +1,6 @@
 #include "edittermdialog.h"
 #include "ui_edittermdialog.h"
+#include <QDesktopServices>
 
 EditTermDialog::EditTermDialog(const QString &word, QWidget *parent)
     : QDialog(parent)
@@ -10,22 +11,45 @@ EditTermDialog::EditTermDialog(const QString &word, QWidget *parent)
     ui->radioBtnUnknown->setChecked(true);
 }
 
+EditTermDialog::EditTermDialog(QHash<QString, WordData> &wordList, const QString &word, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::EditTermDialog)
+{
+    ui->setupUi(this);
+    wordListPointer = &wordList;
+    currentWordString = word;
+    ui->wordLabel->setText(word); // Устанавливаем слово в label
+    ui->radioBtnUnknown->setChecked(true);
+    if (wordListPointer->contains(word)){
+        ui->meaningTextEdit->setPlainText(wordList.value(word).getTranslation());
+        ui->pinyinTextEdit->setPlainText(wordList.value(word).getRomanization());
+        ui->exampleTextEdit->setPlainText(wordList.value(word).getSentence());
+        if(wordList.value(word).getStatus().compare("unknown") == 0)
+            ui->radioBtnUnknown->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("nearlyUnknown") == 0)
+            ui->radioBtnBetter->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("learning") == 0)
+            ui->radioBtnLearning->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("nearlyKnown") == 0)
+            ui->radioBtnNearlyKnown->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("known") == 0)
+            ui->radioBtnKnown->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("ignored") == 0)
+            ui->radioBtnIgnore->setChecked(true);
+        else if(wordList.value(word).getStatus().compare("wellKnown") == 0)
+            ui->radioBtnWellKnown->setChecked(true);
+    }
+}
+
 EditTermDialog::~EditTermDialog()
 {
     delete ui;
 }
 
 void EditTermDialog::chooseColor() {
-    // QColor newColor = QColorDialog::getColor(Qt::white, this, "Выберите цвет");
-    // newColor.setAlpha(125);
-    // if (newColor.isValid()) {
-    //     color = newColor;
-    //     ui->wordLabel->setStyleSheet("background-color: " + color.name() + ";"); // Меняем фон слова
+    // if(ui->radioBtnNew->isChecked()) {
+    //     color = "new";
     // }
-
-    if(ui->radioBtnNew->isChecked()) {
-        color = "new";
-    }
     if(ui->radioBtnUnknown->isChecked()) {
         color = "unknown";
     }
@@ -47,7 +71,6 @@ void EditTermDialog::chooseColor() {
     if(ui->radioBtnWellKnown->isChecked()) {
         color = "wellKnown";
     }
-
 }
 
 QString EditTermDialog::selectedColor() {
@@ -55,14 +78,46 @@ QString EditTermDialog::selectedColor() {
     return color;
 }
 
+WordData EditTermDialog::getCurrentWord() {
+    return currentWord;
+}
+
 void EditTermDialog::on_buttonBox_accepted()
 {
-    //chooseColor();
+    currentWord.setRomanization(ui->pinyinTextEdit->toPlainText());
+    currentWord.setTranslation(ui->meaningTextEdit->toPlainText());
+    currentWord.setSentence(ui->exampleTextEdit->toPlainText());
+    currentWord.setStatus(selectedColor());
+    qDebug() << "Put info" << selectedColor();
+    // if (wordListPointer->contains(currentWordString)){
+
+    // }
+    // WordData &word = (*wordListPointer)[currentWordString];
+    // word.setRomanization(ui->pinyinTextEdit->toPlainText());
+    // word.setTranslation(ui->meaningTextEdit->toPlainText());
+    // word.setSentence(ui->exampleTextEdit->toPlainText());
+    wordListPointer->insert(currentWordString, currentWord);
+
 }
 
 
-void EditTermDialog::on_changeColorBtn_clicked()
+void EditTermDialog::on_dict1Btn_clicked()
 {
-    //chooseColor();
+    QString urlString = "https://bkrs.info/slovo.php?ch=" + currentWordString;
+    QDesktopServices::openUrl(QUrl(urlString));
+}
+
+
+void EditTermDialog::on_dict2Btn_clicked()
+{
+    QString urlString = "https://translate.google.com/?ie=UTF-8&sl=zh&tl=ru&text=" + currentWordString;
+    QDesktopServices::openUrl(QUrl(urlString));
+}
+
+
+void EditTermDialog::on_dict3Btn_clicked()
+{
+    QString urlString = "https://fanyi.baidu.com/mtpe-individual/multimodal?query=" + currentWordString + "&lang=zh2ru";
+    QDesktopServices::openUrl(QUrl(urlString));
 }
 

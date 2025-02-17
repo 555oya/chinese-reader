@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QColorDialog>
+#include "worddata.h"
 
 namespace Ui {
 class EditTermDialog;
@@ -14,18 +15,27 @@ class EditTermDialog : public QDialog
 
 public:
     explicit EditTermDialog(const QString &word, QWidget *parent = nullptr);
+    explicit EditTermDialog(QHash<QString, WordData> &wordList, const QString &word, QWidget *parent = nullptr);
     ~EditTermDialog();
 
     QString selectedColor(); // Метод для получения выбранного цвета
+    WordData getCurrentWord();
 
 private slots:
     void on_buttonBox_accepted();
-    void on_changeColorBtn_clicked();
+
+    void on_dict1Btn_clicked();
+
+    void on_dict2Btn_clicked();
+
+    void on_dict3Btn_clicked();
 
 private:
     Ui::EditTermDialog *ui;
     QString color; // Хранит выбранный цвет
-    //QString color;
+    WordData currentWord;
+    QString currentWordString;
+    QHash<QString, WordData> *wordListPointer;
 
     void chooseColor();
 };

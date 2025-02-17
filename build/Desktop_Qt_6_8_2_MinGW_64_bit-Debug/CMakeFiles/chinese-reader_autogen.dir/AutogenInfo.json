@@ -474,6 +474,12 @@
 			null
 		],
 		[
+			"C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/exitdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_exitdialog.cpp",
+			null
+		],
+		[
 			"C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -576,6 +582,11 @@
 		],
 		[
 			"C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/edittermdialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/anast/OneDrive/Desktop/qt projects/chinese-reader/exitdialog.cpp",
 			"MU",
 			null
 		],
