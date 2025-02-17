@@ -46,9 +46,6 @@ EditTermDialog::~EditTermDialog()
 }
 
 void EditTermDialog::chooseColor() {
-    // if(ui->radioBtnNew->isChecked()) {
-    //     color = "new";
-    // }
     if(ui->radioBtnUnknown->isChecked()) {
         color = "unknown";
     }

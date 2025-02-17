@@ -26,14 +26,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QHash<QString, WordData> *getWordHashList();
-    QSyntaxHighlighter *getHighlighter();
+    QHash<QString, WordData> &getWordHashList();
     void parseText(QString text);
     Text& getCurrentText();
 
 private slots:
     void on_pushButton_clicked();
-    //void updateWordColor(const QString &word, const QString &color);
     void updateWordData(const QString &word, const QString &color, WordData &currentWord);
     void updateText(const QString &word);
     void on_saveButton_clicked();

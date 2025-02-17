@@ -9,8 +9,6 @@ void CustomTextEdit::insertSpace()
     cursor.insertText(" ");
     setTextCursor(cursor);
     emit(textHasChanged(this->toPlainText()));
-    // mainWindow->getCurrentText().setTextStr(this->toPlainText());
-    // mainWindow->getHighlighter()->rehighlight();
 }
 
 void CustomTextEdit::joinWords()
@@ -21,8 +19,6 @@ void CustomTextEdit::joinWords()
     selectedText.remove(regex2);
     cursor.insertText(selectedText);
     emit(textHasChanged(this->toPlainText()));
-    // mainWindow->parseText(this->toPlainText());
-    // mainWindow->getHighlighter()->rehighlight();
 }
 
 void CustomTextEdit::useGoogle()
@@ -55,8 +51,7 @@ void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
         cleanedText.remove(removeNonChineseRegex);
         if (!cleanedText.isEmpty()) {
             qDebug() << "Clicked word:" << clickedWord; // Выводим в debug
-
-            EditTermDialog dialog(*mainWindow->getWordHashList(), clickedWord, this);
+            EditTermDialog dialog(mainWindow->getWordHashList(), clickedWord, this);
             if (dialog.exec() == QDialog::Accepted) {
                 QString chosenColor = dialog.selectedColor();
                 WordData currentWord = dialog.getCurrentWord();
@@ -82,7 +77,7 @@ void CustomTextEdit::mouseMoveEvent(QMouseEvent *event) {
         lastHoveredWord = word; // Обновляем последнее слово
         if (!word.isEmpty()) {
             if (mainWindow) { // Проверяем, что указатель не null
-                QString message = word + " — " + mainWindow->getWordHashList()->value(word).getRomanization() + " — " + mainWindow->getWordHashList()->value(word).getTranslation();
+                QString message = word + " — " + mainWindow->getWordHashList().value(word).getRomanization() + " — " + mainWindow->getWordHashList().value(word).getTranslation();
                 mainWindow->statusBar()->showMessage(message); // Обращаемся к статус-бару
             }
         }

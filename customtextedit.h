@@ -19,7 +19,6 @@ class CustomTextEdit : public QPlainTextEdit {
 public:
     explicit CustomTextEdit(MainWindow *mainWin, QWidget *parent = nullptr) : QPlainTextEdit(parent), mainWindow(mainWin) {
         setMouseTracking(true); // Включаем отслеживание движения мыши
-        //setCursorWidth(0);
         setReadOnly(true);
         QFont newfont("SimSun", 20);
         font = newfont;
@@ -38,7 +37,6 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
 signals:
-    //void wordColorSelected(const QString &word, const QString &color); // Добавляем сигнал
     void wordDataHasChanged(const QString &word, const QString &color, WordData &currentWord);
     void textHasChanged(const QString &newText);
 private:
