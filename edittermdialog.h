@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QColorDialog>
+#include <QDesktopServices>
 #include "worddata.h"
 
 namespace Ui {

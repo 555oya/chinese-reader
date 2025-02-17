@@ -41,10 +41,14 @@ QHash<QString, WordData> *MainWindow::getWordHashList()
     return &wordHashList;
 }
 
+QSyntaxHighlighter *MainWindow::getHighlighter()
+{
+    return highlighter;
+}
+
 void MainWindow::parseText(QString text) {
     QString parsedStr = text;
 
-    text.replace(QChar(0x200B), ' ');
     //удаление всех служебных символов
     QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
     // QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z \u200B]");
@@ -89,6 +93,13 @@ void MainWindow::on_pushButton_clicked()
     file.close();
 
     parseText(text);
+
+    //убираем пробелы до и после \n
+    QRegularExpression regex("[ ]*(\n)[ ]*");
+    text.replace(regex, "\\1");
+    //убираем пробелы между знаками пунктуации
+    QRegularExpression regex2("(?<![一-龥a-zA-Z]) (?![一-龥a-zA-Z])");
+    text.remove(regex2);
 
     this->ui->textEdit->setPlainText(text);
 
@@ -229,7 +240,12 @@ void MainWindow::on_pushButton_2_clicked()
     result = limonp::Join(words.begin(), words.end(), " ");
     QString textQString = QString::fromStdString(result);
 
-
+    //убираем пробелы до и после \n
+    QRegularExpression regex("[ ]*(\n)[ ]*");
+    textQString.replace(regex, "\\1");
+    //убираем пробелы между знаками пунктуации
+    QRegularExpression regex2("(?<![^一-龥a-zA-Z]) (?![^一-龥a-zA-Z])");
+    textQString.remove(regex2);
 
     ui->textEdit->setPlainText(textQString);
 

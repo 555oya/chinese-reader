@@ -1,38 +1,52 @@
 #include "customtextedit.h"
 #include <qapplication.h>
 #include <qstatusbar.h>
+#include <QTimer>
+
+void CustomTextEdit::insertSpace()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.insertText(" ");
+    setTextCursor(cursor);
+    mainWindow->parseText(this->toPlainText());
+    mainWindow->getHighlighter()->rehighlight();
+}
+
+void CustomTextEdit::joinWords()
+{
+    QTextCursor cursor = textCursor();
+    QString selectedText = cursor.selectedText();
+    QRegularExpression regex2("(?<![^一-龥a-zA-Z]) (?![^一-龥a-zA-Z])");
+    selectedText.remove(regex2);
+    cursor.insertText(selectedText);
+    mainWindow->parseText(this->toPlainText());
+    mainWindow->getHighlighter()->rehighlight();
+}
+
+void CustomTextEdit::useGoogle()
+{
+    QTextCursor cursor = textCursor();
+    QString selectedText = cursor.selectedText();
+    selectedText.remove(" ");
+    QString urlString = "https://translate.google.com/?ie=UTF-8&sl=zh&tl=ru&text=" + selectedText;
+    QDesktopServices::openUrl(QUrl(urlString));
+}
+
+void CustomTextEdit::useBaidu()
+{
+    QTextCursor cursor = textCursor();
+    QString selectedText = cursor.selectedText();
+    selectedText.remove(" ");
+    QString urlString = "https://fanyi.baidu.com/mtpe-individual/multimodal?query=" + selectedText + "&lang=zh2ru";
+    QDesktopServices::openUrl(QUrl(urlString));
+}
 
 void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         QTextCursor cursor = cursorForPosition(event->pos()); // Получаем курсор по позиции клика
         cursor.select(QTextCursor::WordUnderCursor); // Выбираем слово
 
-        // Define custom separators (hair space + standard whitespace)
-        // QRegularExpression separatorRegex("[\\s\u200B]");
-
-        // // Find word boundaries
-        // QString text = toPlainText();
-        // int pos = cursor.position();
-
-        // // Find start of word
-        // int start = pos;
-        // while (start > 0 && !separatorRegex.match(text.mid(start-1, 1)).hasMatch()) {
-        //     start--;
-        // }
-
-        // // Find end of word
-        // int end = pos;
-        // while (end < text.length() && !separatorRegex.match(text.mid(end, 1)).hasMatch()) {
-        //     end++;
-        // }
-
-        // // Select the word
-        // cursor.setPosition(start);
-        // cursor.setPosition(end, QTextCursor::KeepAnchor);
-
         QString clickedWord = cursor.selectedText(); // Получаем выделенное слово
-        // Remove zero-width spaces and non-Chinese characters
-        clickedWord.remove(QChar(0x200B)); // Remove ZWSP
 
         QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z]");
         QString cleanedText = clickedWord;
@@ -58,29 +72,6 @@ void CustomTextEdit::mouseMoveEvent(QMouseEvent *event) {
     QTextCursor cursor = cursorForPosition(event->pos()); // Получаем курсор по позиции
     cursor.select(QTextCursor::WordUnderCursor); // Выделяем слово под курсором
 
-    // Define custom separators (hair space + standard whitespace)
-    // QRegularExpression separatorRegex("[\\s\u200B]");
-
-    // // Find word boundaries
-    // QString text = toPlainText();
-    // int pos = cursor.position();
-
-    // // Find start of word
-    // int start = pos;
-    // while (start > 0 && !separatorRegex.match(text.mid(start-1, 1)).hasMatch()) {
-    //     start--;
-    // }
-
-    // // Find end of word
-    // int end = pos;
-    // while (end < text.length() && !separatorRegex.match(text.mid(end, 1)).hasMatch()) {
-    //     end++;
-    // }
-
-    // // Select the word
-    // cursor.setPosition(start);
-    // cursor.setPosition(end, QTextCursor::KeepAnchor);
-
     QString hoveredWord = cursor.selectedText().trimmed(); // Получаем выделенный текст
 
     QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z]");
@@ -97,4 +88,46 @@ void CustomTextEdit::mouseMoveEvent(QMouseEvent *event) {
         }
     }
     QPlainTextEdit::mouseMoveEvent(event);
+}
+
+void CustomTextEdit::contextMenuEvent(QContextMenuEvent *event)
+{
+    rmbEvent = event;
+    QMenu *menu = createStandardContextMenu();
+    QList<QAction *> actionList = menu->actions();
+    qDebug() << "Action list size " << actionList.size();
+
+    menu->addSeparator();
+    QAction *insertSpaceAction = new QAction("Insert space", this);
+    connect(insertSpaceAction, &QAction::triggered, this, &CustomTextEdit::insertSpace);
+    menu->addAction(insertSpaceAction);
+
+    QAction *joinWordsAction = new QAction("Make one word", this);
+    connect(joinWordsAction, &QAction::triggered, this, &CustomTextEdit::joinWords);
+    menu->addAction(joinWordsAction);
+
+    menu->addSeparator();
+    menu->addAction(tr("Translate"))->setEnabled(false);
+    menu->addSeparator();
+
+    QAction *useGoogleAction = new QAction("Use google", this);
+    connect(useGoogleAction, &QAction::triggered, this, &CustomTextEdit::useGoogle);
+    menu->addAction(useGoogleAction);
+
+    QAction *useBaiduAction = new QAction("Use baidu", this);
+    connect(useBaiduAction, &QAction::triggered, this, &CustomTextEdit::useBaidu);
+    menu->addAction(useBaiduAction);
+
+    QTextCursor cursor = textCursor();
+    if(cursor.hasSelection()){
+        menu->actions().at(4)->setEnabled(false);
+    }
+    else {
+        menu->actions().at(5)->setEnabled(false);
+        menu->actions().at(9)->setEnabled(false);
+        menu->actions().at(10)->setEnabled(false);
+    }
+
+    menu->exec(event->globalPos());
+    delete menu;
 }

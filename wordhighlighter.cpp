@@ -52,8 +52,6 @@ void WordHighlighter::changeWordColorRule(const QMap<QString, QString> &colorMap
 
         for (auto rule = highlightingRules.begin(); rule != highlightingRules.end(); ++rule) {
             QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
-            // QRegularExpression regex(QString(R"((?:^|[\s\x{200B}])%1(?=[\s\x{200B}]|$))").arg(QRegularExpression::escape(it.key())),
-            //                          QRegularExpression::UseUnicodePropertiesOption);
             if (rule->pattern == regex) {
                 rule->format = checkStatus(it.value());
             }
@@ -71,8 +69,6 @@ void WordHighlighter::setWordColorRule(const QMap<QString, QString> &colorMap) {
 
     for (auto it = colorMap.begin(); it != colorMap.end(); ++it) {
         QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
-        // QRegularExpression regex(QString(R"((?:^|[\s\x{200B}])%1(?=[\s\x{200B}]|$))").arg(QRegularExpression::escape(it.key())),
-        //                          QRegularExpression::UseUnicodePropertiesOption);
         rule.pattern = regex;
         rule.format = checkStatus(it.value());
         highlightingRules.append(rule);
@@ -91,7 +87,8 @@ void WordHighlighter::highlightBlock(const QString &text) {
     QTextCharFormat fmt;
     fmt.setFontPointSize(spaceSize);
 
-    QRegularExpression whitespaceRegex(" ");
+    // Регулярное выражение для поиска **только пробелов, не включая \n**
+    QRegularExpression whitespaceRegex("[ ]+");  // Исключаем \n
     QRegularExpressionMatchIterator wsMatchIterator = whitespaceRegex.globalMatch(text);
 
     while (wsMatchIterator.hasNext()) {

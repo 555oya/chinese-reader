@@ -1,9 +1,13 @@
 #ifndef CUSTOMTEXTEDIT_H
 #define CUSTOMTEXTEDIT_H
+
 #include <QMouseEvent>
 #include <QPlainTextEdit>
 #include <QDebug>
 #include <QRegularExpression>
+#include <QMenu>
+#include <QDesktopServices>
+
 #include "edittermdialog.h"
 #include "worddata.h"
 #include "mainwindow.h"
@@ -16,11 +20,19 @@ public:
     explicit CustomTextEdit(MainWindow *mainWin, QWidget *parent = nullptr) : QPlainTextEdit(parent), mainWindow(mainWin) {
         setMouseTracking(true); // Включаем отслеживание движения мыши
         //setCursorWidth(0);
+        setReadOnly(true);
     }
+
+private slots:
+    void insertSpace();
+    void joinWords();
+    void useGoogle();
+    void useBaidu();
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override; // Обрабатываем клик
     void mouseMoveEvent(QMouseEvent *event) override;
+    void contextMenuEvent(QContextMenuEvent *event) override;
 
 signals:
     //void wordColorSelected(const QString &word, const QString &color); // Добавляем сигнал
@@ -28,6 +40,7 @@ signals:
 private:
     MainWindow *mainWindow; // Указатель на MainWindow
     QString lastHoveredWord; // Последнее выделенное слово
+    QContextMenuEvent *rmbEvent;
 };
 
 

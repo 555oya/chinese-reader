@@ -1,6 +1,5 @@
 #include "edittermdialog.h"
 #include "ui_edittermdialog.h"
-#include <QDesktopServices>
 
 EditTermDialog::EditTermDialog(const QString &word, QWidget *parent)
     : QDialog(parent)
@@ -89,13 +88,6 @@ void EditTermDialog::on_buttonBox_accepted()
     currentWord.setSentence(ui->exampleTextEdit->toPlainText());
     currentWord.setStatus(selectedColor());
     qDebug() << "Put info" << selectedColor();
-    // if (wordListPointer->contains(currentWordString)){
-
-    // }
-    // WordData &word = (*wordListPointer)[currentWordString];
-    // word.setRomanization(ui->pinyinTextEdit->toPlainText());
-    // word.setTranslation(ui->meaningTextEdit->toPlainText());
-    // word.setSentence(ui->exampleTextEdit->toPlainText());
     wordListPointer->insert(currentWordString, currentWord);
 
 }

@@ -25,6 +25,8 @@ public:
     ~MainWindow();
 
     QHash<QString, WordData> *getWordHashList();
+    QSyntaxHighlighter *getHighlighter();
+    void parseText(QString text);
 
 private slots:
     void on_pushButton_clicked();
@@ -47,7 +49,6 @@ private:
     void loadWordsFromCSV(const QString& filePath);
     bool changesInWord;
     void closeEvent(QCloseEvent *event);
-    void parseText(QString text);
     QString filepath;
 };
 #endif // MAINWINDOW_H
