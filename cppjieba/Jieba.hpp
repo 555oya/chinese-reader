@@ -3,6 +3,8 @@
 
 #include "QuerySegment.hpp"
 #include "KeywordExtractor.hpp"
+#include <qdebug.h>
+#include <qlogging.h>
 
 namespace cppjieba {
 
@@ -126,11 +128,7 @@ class Jieba {
     if (last_char == '/' || last_char == '\\') {
         return dir + filename;
     } else {
-        #ifdef _WIN32
-        return dir + '\\' + filename;
-        #else
         return dir + '/' + filename;
-        #endif
     }
   }
 
@@ -143,8 +141,9 @@ class Jieba {
   static string getPath(const string& path, const string& default_file) {
     if (path.empty()) {
       string current_dir = getCurrentDirectory();
-      //string parent_dir = current_dir.substr(0, current_dir.find_last_of("/\\"));
-      //string grandparent_dir = parent_dir.substr(0, parent_dir.find_last_of("/\\"));
+      string parent_dir = current_dir.substr(0, current_dir.find_last_of("/\\"));
+      string grandparent_dir = parent_dir.substr(0, parent_dir.find_last_of("/\\"));
+      qDebug() << "JIEBA " << pathJoin(pathJoin(current_dir, "dict"), default_file);
       return pathJoin(pathJoin(current_dir, "dict"), default_file);
     }
     return path;

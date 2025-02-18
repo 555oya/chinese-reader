@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QSettings>
 
 #include "wordhighlighter.h"
 #include "worddata.h"
@@ -39,6 +40,9 @@ private slots:
     void on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1);
 
 private:
+    QSettings * settings;
+    bool defaultFolderSet;
+
     Ui::MainWindow *ui;
     WordHighlighter* highlighter;
     QHash<QString, WordData> wordHashList;
@@ -48,10 +52,14 @@ private:
     void loadWordsFromCSV(const QString& filePath);
     bool changesInWord;
     void closeEvent(QCloseEvent *event);
+    void saveSettings();
+    void loadSettings();
 
     Text currentText;
 
+    QString folderPath;
     QString termDictFilePath;
+    QString termDictFolderPath;
     QString defaultOpenFileFolderPath;
 };
 #endif // MAINWINDOW_H

@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     currentText = Text();
 
+    settings = new QSettings(this);
+    loadSettings();
+
     ui->checkBoxHideSpaces->setCheckState(Qt::Checked);
 
     connect(customTextEdit, &CustomTextEdit::wordDataHasChanged, this, &MainWindow::updateWordData);
@@ -30,18 +33,36 @@ MainWindow::MainWindow(QWidget *parent)
 
     changesInWord = false;
 
-    defaultOpenFileFolderPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/chinese-reader/texts";
-    //defaultOpenFileFolderPath = "";
-    termDictFilePath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/chinese-reader/terms/term-dict.csv";
+    loadSettings();
+    qDebug() << "defaultFolderSet " << defaultFolderSet;
+    if (!defaultFolderSet) {
+        QMessageBox::information(this, "Choose folder", "Select a directory for chinese-reader", QMessageBox::Ok);
+        folderPath = QFileDialog::getExistingDirectory(this, tr("Choose directory"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        //проверка
+        folderPath = folderPath + "/chinese-reader";
+        defaultOpenFileFolderPath = folderPath + "/texts";
+        termDictFolderPath = folderPath + "/terms";
+        QDir dirText(defaultOpenFileFolderPath);
+        if (!dirText.exists())
+            dirText.mkpath(defaultOpenFileFolderPath);
+        QDir dirTerm(termDictFolderPath);
+        if (!dirTerm.exists())
+            dirTerm.mkpath(termDictFolderPath);
+    }
+    termDictFilePath = folderPath + "/terms/term-dict.csv";
+    defaultOpenFileFolderPath = folderPath + "/texts";
+    termDictFolderPath = folderPath + "/terms";
 
     if(QFile::exists(termDictFilePath))
         loadWordsFromCSV(termDictFilePath);
     else
-        qDebug() << termDictFilePath;
+        qDebug() << "There is no term-sict.csv!! Path: " << termDictFilePath;
 }
 
 MainWindow::~MainWindow()
 {
+    saveSettings();
+    qDebug() << (settings->value("folderPath", "")).toString();
     delete ui;
 }
 
@@ -58,6 +79,7 @@ Text &MainWindow::getCurrentText()
 void MainWindow::on_pushButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), defaultOpenFileFolderPath, tr("Text files (*.txt)"));
+    qDebug() << "Text folder " << defaultOpenFileFolderPath;
     currentText = Text(true, fileName, wordHashList);
 
     highlighter->setWordColorRule(currentText.getWordColors());
@@ -184,6 +206,20 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->accept();
     }
     }
+}
+
+void MainWindow::saveSettings()
+{
+    settings->setValue("folderPath", folderPath);
+    settings->setValue("defaultFolderSet", true);
+}
+
+void MainWindow::loadSettings()
+{
+    folderPath = settings->value("folderPath", "").toString();
+    defaultFolderSet = settings->value("defaultFolderSet").toBool();
+
+    qDebug() << "folder path: " << folderPath;
 }
 
 void MainWindow::on_saveButton_clicked()

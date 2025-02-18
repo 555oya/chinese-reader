@@ -83,6 +83,9 @@ void Text::parseTextWords()
 
 void Text::formatText()
 {
+    QRegularExpression multipleSpacesRegex(" +");
+    textStr.replace(multipleSpacesRegex, " ");
+    textStr = textStr.trimmed(); //удаляем пробелы в самом начале и в конце
     //убираем пробелы до и после \n
     QRegularExpression regex("[ ]*(\n)[ ]*");
     textStr.replace(regex, "\\1");
@@ -94,7 +97,13 @@ void Text::formatText()
 void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
 {
     //QString text = textStr;
-    cppjieba::Jieba jieba;
+    cppjieba::Jieba jieba(
+        "dict/jieba.dict.utf8",
+        "dict/hmm_model.utf8",
+        "dict/user.dict.utf8",
+        "dict/idf.utf8",
+        "dict/stop_words.utf8"
+        );
     vector<string> words;
     vector<cppjieba::Word> jiebawords;
     string s;
