@@ -64,6 +64,8 @@ MainWindow::~MainWindow()
     saveSettings();
     qDebug() << (settings->value("folderPath", "")).toString();
     delete ui;
+    delete settings;
+    delete highlighter;
 }
 
 QHash<QString, WordData> &MainWindow::getWordHashList()
@@ -85,8 +87,6 @@ void MainWindow::on_pushButton_clicked()
     highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
-
-    highlighter->rehighlight();
 }
 
 void MainWindow::updateWordData(const QString &word, const QString &color, WordData &currentWord) {
@@ -232,11 +232,11 @@ void MainWindow::on_saveButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     currentText.cutToWords(wordHashList);
-    highlighter->setWordColorRule(currentText.getWordColors());
+    //highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
 
-    highlighter->rehighlight();
+    //highlighter->rehighlight();
 }
 
 void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1)
