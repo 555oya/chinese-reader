@@ -96,13 +96,14 @@ void Text::formatText()
 
 void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
 {
-    //QString text = textStr;
+    QString dictPath = QCoreApplication::applicationDirPath() + "/dict";
+
     cppjieba::Jieba jieba(
-        "dict/jieba.dict.utf8",
-        "dict/hmm_model.utf8",
-        "dict/user.dict.utf8",
-        "dict/idf.utf8",
-        "dict/stop_words.utf8"
+        (dictPath + "/jieba.dict.utf8").toStdString(),
+        (dictPath + "/hmm_model.utf8").toStdString(),
+        (dictPath + "/user.dict.utf8").toStdString(),
+        (dictPath + "/idf.utf8").toStdString(),
+        (dictPath + "/stop_words.utf8").toStdString()
         );
     vector<string> words;
     vector<cppjieba::Word> jiebawords;

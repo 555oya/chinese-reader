@@ -146,6 +146,7 @@ class Jieba {
       qDebug() << "JIEBA " << pathJoin(pathJoin(current_dir, "dict"), default_file);
       return pathJoin(pathJoin(current_dir, "dict"), default_file);
     }
+    qDebug() << path;
     return path;
   }
 

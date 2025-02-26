@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMap>
+#include <QCoreApplication>
 
 #include "worddata.h"
 #include "cppjieba/Jieba.hpp"
