@@ -17,6 +17,7 @@ Text::Text(bool FromFile, const QString &newText, const QHash<QString, WordData>
     parseTextWords();
     setWordColors(wordHashList);
     formatText();
+    dictionary = &wordHashList;
 }
 
 void Text::setTextStr(const QString &newText)
@@ -38,6 +39,8 @@ void Text::readFromFile(const QString &newfile)
 
     QTextStream reading_stream(&file); //open stream for reading
     textStr = reading_stream.readAll();
+    originalText = QString(textStr);
+    originalText.remove(" ");
     file.close();
 }
 
@@ -96,21 +99,19 @@ void Text::formatText()
 
 void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
 {
-    QString dictPath = QCoreApplication::applicationDirPath() + "/dict";
-
     cppjieba::Jieba jieba(
-        (dictPath + "/jieba.dict.utf8").toStdString(),
-        (dictPath + "/hmm_model.utf8").toStdString(),
-        (dictPath + "/user.dict.utf8").toStdString(),
-        (dictPath + "/idf.utf8").toStdString(),
-        (dictPath + "/stop_words.utf8").toStdString()
+        "dict/jieba.dict.utf8",
+        "dict/hmm_model.utf8",
+        "dict/user.dict.utf8",
+        "dict/idf.utf8",
+        "dict/stop_words.utf8"
         );
     vector<string> words;
     vector<cppjieba::Word> jiebawords;
     string s;
     string result;
 
-    s = textStr.toStdString();
+    s = originalText.toStdString();
     jieba.Cut(s, words, true);
 
     result = limonp::Join(words.begin(), words.end(), " ");
@@ -118,11 +119,86 @@ void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
     parseTextWords();
     setWordColors(wordHashList);
     formatText();
+
+    string text = textStr.toStdString();
 }
 
 QMap<QString, QString> Text::getWordColors()
 {
     return wordColors;
+}
+
+double Text::getWordsPercent(const QString &status)
+{
+    QStringList allWords;
+    QString parsedStr = textStr;
+
+    //удаление всех служебных символов
+    QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
+    QString cleanedText = parsedStr;
+    cleanedText.remove(removeNonChineseRegex);
+
+    // 2. Сжимаем несколько пробелов в один
+    QRegularExpression multipleSpacesRegex("\\s+");
+    cleanedText.replace(multipleSpacesRegex, " ");
+    cleanedText = cleanedText.trimmed(); //удаляем пробелы в самом начале и в конце
+
+    allWords = cleanedText.split(" ");
+
+    double count = 0;
+    for (auto &word : allWords) {
+        if (dictionary->contains(word)) {
+            if(dictionary->find(word).value().getStatus().compare(status) == 0)
+                count++;
+        }
+        else if (status.compare("new") == 0) {
+            count++;
+        }
+    }
+    double percent = count * 100.0 / (double)allWords.size();
+
+    return percent;
+}
+
+double Text::getTextReadability()
+{
+    QStringList allWords;
+    QString parsedStr = textStr;
+
+    //удаление всех служебных символов
+    QRegularExpression removeNonChineseRegex("[^一-龥a-zA-Z ]");
+    QString cleanedText = parsedStr;
+    cleanedText.remove(removeNonChineseRegex);
+
+    // 2. Сжимаем несколько пробелов в один
+    QRegularExpression multipleSpacesRegex("\\s+");
+    cleanedText.replace(multipleSpacesRegex, " ");
+    cleanedText = cleanedText.trimmed(); //удаляем пробелы в самом начале и в конце
+
+    allWords = cleanedText.split(" ");
+
+    QList<QPair<double, double>> wordFreq;
+
+    for (auto &word : wordsStrList) {
+        double count = allWords.count(word);
+        if (dictionary->contains(word)) {
+            if(dictionary->find(word).value().getStatus().compare("wellKnown") == 0)
+                wordFreq.append(QPair<double, double>(count, 1));
+            if(dictionary->find(word).value().getStatus().compare("known") == 0)
+                wordFreq.append(QPair<double, double>(count, 1));
+            if(dictionary->find(word).value().getStatus().compare("nearlyKnown") == 0)
+                wordFreq.append(QPair<double, double>(count, 0.75));
+            if(dictionary->find(word).value().getStatus().compare("learning") == 0)
+                wordFreq.append(QPair<double, double>(count, 0.5));
+        }
+    }
+    double sum = 0;
+    for (auto &word_pair : wordFreq)
+        sum += (word_pair.first * word_pair.second);
+
+    double percent = sum * 100.0 / (double)allWords.size();
+
+    return percent;
 }
 
 

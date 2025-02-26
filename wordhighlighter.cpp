@@ -71,16 +71,21 @@ void WordHighlighter::setWordColorRule(const QMap<QString, QString> &colorMap) {
         QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(it.key())));
         rule.pattern = regex;
         rule.format = checkStatus(it.value());
-        highlightingRules.append(rule);
+        highlightingRules.insert(it.key(), rule);
     }
 }
 
 void WordHighlighter::highlightBlock(const QString &text) {
-    for (const HighlightingRule &rule : std::as_const(highlightingRules)) {
-        QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
-        while (matchIterator.hasNext()) {
-            QRegularExpressionMatch match = matchIterator.next();
-            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+    QStringList wordsList = text.split(" ");
+
+    for (QString &word : wordsList) {
+        if (highlightingRules.contains(word)) {
+            HighlightingRule rule = highlightingRules.value(word);
+            QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
+            while (matchIterator.hasNext()) {
+                QRegularExpressionMatch match = matchIterator.next();
+                setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+            }
         }
     }
 

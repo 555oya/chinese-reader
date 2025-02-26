@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMap>
-#include <QCoreApplication>
 
 #include "worddata.h"
 #include "cppjieba/Jieba.hpp"
@@ -27,11 +26,17 @@ public:
     QStringList getTextWords();
     QMap<QString, QString> getWordColors();
 
+    double getWordsPercent(const QString &status);
+    double getTextReadability();
+
 private:
+    QString originalText;
     QString textStr;
     QString cutToWordsStr;
     QStringList wordsStrList;
     QMap<QString, QString> wordColors;
+    QHash<QString, WordData> textWords;
+    const QHash<QString, WordData> *dictionary;
 };
 
 #endif // TEXT_H

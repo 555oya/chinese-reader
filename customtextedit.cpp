@@ -39,6 +39,171 @@ void CustomTextEdit::useBaidu()
     QDesktopServices::openUrl(QUrl(urlString));
 }
 
+void CustomTextEdit::addNRDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 27 nr\n";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addNSDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 116 ns";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addNTDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 70 nt";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addNDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 125 n";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addNZDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 41 nz";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addVDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 368 v";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addVNDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 390 vn";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addVDDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 1581 vd";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addADict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 481 a";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addDDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 1633 d";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
+void CustomTextEdit::addIDict()
+{
+    QTextCursor cursor = cursorForPosition(rmbEvent->pos()); // Получаем курсор по позиции клика
+    cursor.select(QTextCursor::WordUnderCursor);
+    QString clickedWord = cursor.selectedText();
+    QFile file("dict/user.dict.utf8");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << clickedWord << " 12 i";
+        file.close();
+    } else {
+        qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
+    }
+}
+
 void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         QTextCursor cursor = cursorForPosition(event->pos()); // Получаем курсор по позиции клика
@@ -53,6 +218,7 @@ void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
             qDebug() << "Clicked word:" << clickedWord; // Выводим в debug
             EditTermDialog dialog(mainWindow->getWordHashList(), clickedWord, this);
             if (dialog.exec() == QDialog::Accepted) {
+                qDebug() << "Accepted";
                 QString chosenColor = dialog.selectedColor();
                 WordData currentWord = dialog.getCurrentWord();
                 if (!chosenColor.isEmpty()) {
@@ -113,9 +279,64 @@ void CustomTextEdit::contextMenuEvent(QContextMenuEvent *event)
     connect(useBaiduAction, &QAction::triggered, this, &CustomTextEdit::useBaidu);
     menu->addAction(useBaiduAction);
 
+    QMenu* submenu = menu->addMenu( "Add to dict as..." );
+
+    QAction *addNR = new QAction("Person name", this);
+    connect(addNR, &QAction::triggered, this, &CustomTextEdit::addNRDict);
+    submenu->addAction(addNR);
+
+    QAction *addNS = new QAction("Place name", this);
+    connect(addNS, &QAction::triggered, this, &CustomTextEdit::addNSDict);
+    submenu->addAction(addNS);
+
+    QAction *addNT = new QAction("Organization Name", this);
+    connect(addNT, &QAction::triggered, this, &CustomTextEdit::addNTDict);
+    submenu->addAction(addNT);
+
+    // QAction *addNW = new QAction("作品名", this);
+    // connect(addNW, &QAction::triggered, this, &CustomTextEdit::addToDictionary);
+    // submenu->addAction(addNW);
+
+    QAction *addN = new QAction("Common Noun", this);
+    connect(addN, &QAction::triggered, this, &CustomTextEdit::addNDict);
+    submenu->addAction(addN);
+
+    QAction *addNZ = new QAction("Other proper names", this);
+    connect(addNZ, &QAction::triggered, this, &CustomTextEdit::addNZDict);
+    submenu->addAction(addNZ);
+
+    submenu->addSeparator();
+
+    QAction *addV = new QAction("Common Verbs", this);
+    connect(addV, &QAction::triggered, this, &CustomTextEdit::addVDict);
+    submenu->addAction(addV);
+
+    QAction *addVD = new QAction("Converb", this);
+    connect(addVD, &QAction::triggered, this, &CustomTextEdit::addVDDict);
+    submenu->addAction(addVD);
+
+    QAction *addVN = new QAction("Noun Verb", this);
+    connect(addVN, &QAction::triggered, this, &CustomTextEdit::addVNDict);
+    submenu->addAction(addVN);
+
+    submenu->addSeparator();
+
+    QAction *addA = new QAction("Аdjective", this);
+    connect(addA, &QAction::triggered, this, &CustomTextEdit::addADict);
+    submenu->addAction(addA);
+
+    QAction *addD = new QAction("Adverb", this);
+    connect(addD, &QAction::triggered, this, &CustomTextEdit::addDDict);
+    submenu->addAction(addD);
+
+    QAction *addI = new QAction("Chengyu", this);
+    connect(addI, &QAction::triggered, this, &CustomTextEdit::addIDict);
+    submenu->addAction(addI);
+
     QTextCursor cursor = textCursor();
     if(cursor.hasSelection()){
         menu->actions().at(4)->setEnabled(false);
+        menu->actions().at(11)->setEnabled(false);
     }
     else {
         menu->actions().at(5)->setEnabled(false);

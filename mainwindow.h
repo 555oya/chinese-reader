@@ -30,6 +30,7 @@ public:
     QHash<QString, WordData> &getWordHashList();
     void parseText(QString text);
     Text& getCurrentText();
+    void getStatistics();
 
 private slots:
     void on_pushButton_clicked();
@@ -45,6 +46,7 @@ private:
 
     Ui::MainWindow *ui;
     WordHighlighter* highlighter;
+    cppjieba::Jieba *jieba;
     QHash<QString, WordData> wordHashList;
 
     void saveWordsToCSV(const QString& filePath);

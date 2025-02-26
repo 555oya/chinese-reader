@@ -24,7 +24,7 @@ private:
         QRegularExpression pattern;
         QTextCharFormat format;
     };
-    QList<HighlightingRule> highlightingRules;
+    QHash<QString, HighlightingRule> highlightingRules;
 
     int spaceSize;
 
