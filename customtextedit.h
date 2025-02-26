@@ -31,6 +31,20 @@ private slots:
     void useGoogle();
     void useBaidu();
 
+    void addNDict();
+    void addNRDict();
+    void addNSDict();
+    void addNTDict();
+    void addNZDict();
+
+    void addVDict();
+    void addVNDict();
+    void addVDDict();
+
+    void addADict();
+    void addDDict();
+    void addIDict();
+
 protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override; // Обрабатываем клик
     void mouseMoveEvent(QMouseEvent *event) override;

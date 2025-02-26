@@ -57,6 +57,10 @@ MainWindow::MainWindow(QWidget *parent)
         loadWordsFromCSV(termDictFilePath);
     else
         qDebug() << "There is no term-sict.csv!! Path: " << termDictFilePath;
+
+    ui->saveButton->setEnabled(false);
+    ui->pushButton_2->setEnabled(false);
+    ui->groupBox->setHidden(true);
 }
 
 MainWindow::~MainWindow()
@@ -78,6 +82,18 @@ Text &MainWindow::getCurrentText()
     return currentText;
 }
 
+void MainWindow::getStatistics()
+{
+    ui->newWordsPercent->setText(QString::number(currentText.getWordsPercent("new"), 'g', 2));
+    ui->unknownWordsPercent->setText(QString::number(currentText.getWordsPercent("unknown"), 'g', 2));
+    ui->nearlyUnknownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyUnknown"), 'g', 2));
+    ui->learningWordsPercent->setText(QString::number(currentText.getWordsPercent("learning"), 'g', 2));
+    ui->nearlyKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyKnown"), 'g', 2));
+    ui->knownWordsPercent->setText(QString::number(currentText.getWordsPercent("known"), 'g', 2));
+    ui->ignoredWordsPercent->setText(QString::number(currentText.getWordsPercent("ignored"), 'g', 2));
+    ui->wellKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("wellKnown"), 'g', 2));
+}
+
 void MainWindow::on_pushButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), defaultOpenFileFolderPath, tr("Text files (*.txt)"));
@@ -87,6 +103,10 @@ void MainWindow::on_pushButton_clicked()
     highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
+    ui->saveButton->setEnabled(true);
+    ui->pushButton_2->setEnabled(true);
+    getStatistics();
+    ui->groupBox->setHidden(false);
 }
 
 void MainWindow::updateWordData(const QString &word, const QString &color, WordData &currentWord) {
@@ -232,7 +252,7 @@ void MainWindow::on_saveButton_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     currentText.cutToWords(wordHashList);
-    //highlighter->setWordColorRule(currentText.getWordColors());
+    highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
 

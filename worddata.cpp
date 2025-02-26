@@ -9,6 +9,11 @@ WordData::WordData() {
 
 }
 
+QString WordData::getWord() const
+{
+    return word;
+}
+
 QString WordData::getTranslation() const {
     return translation;
 }
@@ -25,12 +30,27 @@ QString WordData::getStatus() const {
     return status;
 }
 
+QString WordData::getTag() const
+{
+    return tag;
+}
+
 QStringList WordData::getLinkedTerms() const {
     return linkedTerms;
 }
 
+void WordData::setWord(const QString &newWord)
+{
+    word = newWord;
+}
+
 void WordData::setStatus(const QString& newStatus) {
     status = newStatus;
+}
+
+void WordData::setTag(const QString &newTag)
+{
+    tag = newTag;
 }
 
 void WordData::setRomanization(const QString& newRomanization) {

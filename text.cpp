@@ -38,6 +38,8 @@ void Text::readFromFile(const QString &newfile)
 
     QTextStream reading_stream(&file); //open stream for reading
     textStr = reading_stream.readAll();
+    originalText = QString(textStr);
+    originalText.remove(" ");
     file.close();
 }
 
@@ -96,7 +98,6 @@ void Text::formatText()
 
 void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
 {
-    //QString text = textStr;
     cppjieba::Jieba jieba(
         "dict/jieba.dict.utf8",
         "dict/hmm_model.utf8",
@@ -109,7 +110,7 @@ void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
     string s;
     string result;
 
-    s = textStr.toStdString();
+    s = originalText.toStdString();
     jieba.Cut(s, words, true);
 
     result = limonp::Join(words.begin(), words.end(), " ");
@@ -117,11 +118,24 @@ void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
     parseTextWords();
     setWordColors(wordHashList);
     formatText();
+
+    string text = textStr.toStdString();
 }
 
 QMap<QString, QString> Text::getWordColors()
 {
     return wordColors;
+}
+
+double Text::getWordsPercent(const QString &status)
+{
+    double count = 0;
+    for (auto &word : wordColors) {
+        if (word.compare(status))
+            count++;
+    }
+    double percent = count / wordColors.size();
+    return percent;
 }
 
 

@@ -26,11 +26,15 @@ public:
     QStringList getTextWords();
     QMap<QString, QString> getWordColors();
 
+    double getWordsPercent(const QString &status);
+
 private:
+    QString originalText;
     QString textStr;
     QString cutToWordsStr;
     QStringList wordsStrList;
     QMap<QString, QString> wordColors;
+    QHash<QString, WordData> textWords;
 };
 
 #endif // TEXT_H

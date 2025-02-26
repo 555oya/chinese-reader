@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QColorDialog>
 #include <QDesktopServices>
+#include <qlabel.h>
+#include <qplaintextedit.h>
 #include "worddata.h"
 
 namespace Ui {
@@ -31,12 +33,24 @@ private slots:
 
     void on_dict3Btn_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::EditTermDialog *ui;
     QString color; // Хранит выбранный цвет
     WordData currentWord;
     QString currentWordString;
     QHash<QString, WordData> *wordListPointer;
+    bool editable;
+
+    QLabel *linkedTermsLabel;
+    QLabel *meaningLabel;
+    QLabel *pinyinLabel;
+    QLabel *exampleLabel;
+
+    QPlainTextEdit *meaningTextEdit;
+    QPlainTextEdit *pinyinTextEdit;
+    QPlainTextEdit *exampleTextEdit;
 
     void chooseColor();
 };

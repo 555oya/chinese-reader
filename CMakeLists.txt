@@ -27,11 +27,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         cppjieba/limonp/ArgvContext.hpp cppjieba/limonp/Closure.hpp cppjieba/limonp/Colors.hpp cppjieba/limonp/Condition.hpp cppjieba/limonp/Config.hpp cppjieba/limonp/ForcePublic.hpp cppjieba/limonp/LocalVector.hpp cppjieba/limonp/Logging.hpp cppjieba/limonp/NonCopyable.hpp cppjieba/limonp/StdExtension.hpp cppjieba/limonp/StringUtil.hpp
         wordhighlighter.h wordhighlighter.cpp
         customtextedit.h customtextedit.cpp
-        terms.h terms.cpp
+
         edittermdialog.h edittermdialog.cpp edittermdialog.ui
         worddata.h worddata.cpp
         exitdialog.h exitdialog.cpp exitdialog.ui
         text.h text.cpp
+
+        library.h library.cpp library.ui
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET chinese-reader APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
