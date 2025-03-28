@@ -62,7 +62,7 @@ void CustomTextEdit::addNSDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 116 ns";
+        out << clickedWord << " 116 ns";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -77,7 +77,7 @@ void CustomTextEdit::addNTDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 70 nt";
+        out << clickedWord << " 70 nt";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -92,7 +92,7 @@ void CustomTextEdit::addNDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 125 n";
+        out << clickedWord << " 125 n";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -107,7 +107,7 @@ void CustomTextEdit::addNZDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 41 nz";
+        out << clickedWord << " 41 nz";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -122,7 +122,7 @@ void CustomTextEdit::addVDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 368 v";
+        out << clickedWord << " 368 v";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -137,7 +137,7 @@ void CustomTextEdit::addVNDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 390 vn";
+        out << clickedWord << " 390 vn";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -152,7 +152,7 @@ void CustomTextEdit::addVDDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 1581 vd";
+        out << clickedWord << " 1581 vd";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -167,7 +167,7 @@ void CustomTextEdit::addADict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 481 a";
+        out << clickedWord << " 481 a";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";
@@ -182,7 +182,7 @@ void CustomTextEdit::addDDict()
     QFile file("dict/user.dict.utf8");
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream out(&file);
-    out << clickedWord << " 1633 d";
+        out << clickedWord << " 1633 d";
         file.close();
     } else {
         qDebug() << "Не удалось открыть файл user.dict.utf8 для записи!";

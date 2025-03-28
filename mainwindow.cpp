@@ -61,6 +61,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->saveButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->groupBox->setHidden(true);
+    ui->groupBox_2->setHidden(true);
+
+    int max_width = ui->nearlyUnknownWordsPercent->width();
+    ui->label->setFixedWidth(max_width);
+    ui->label_8->setFixedWidth(max_width);
+    ui->label_2->setFixedWidth(max_width);
+    ui->label_3->setFixedWidth(max_width);
+    ui->label_4->setFixedWidth(max_width);
+    ui->label_5->setFixedWidth(max_width);
+    ui->label_6->setFixedWidth(max_width);
+    ui->label_7->setFixedWidth(max_width);
 }
 
 MainWindow::~MainWindow()
@@ -84,14 +95,15 @@ Text &MainWindow::getCurrentText()
 
 void MainWindow::getStatistics()
 {
-    ui->newWordsPercent->setText(QString::number(currentText.getWordsPercent("new"), 'g', 2));
-    ui->unknownWordsPercent->setText(QString::number(currentText.getWordsPercent("unknown"), 'g', 2));
-    ui->nearlyUnknownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyUnknown"), 'g', 2));
-    ui->learningWordsPercent->setText(QString::number(currentText.getWordsPercent("learning"), 'g', 2));
-    ui->nearlyKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyKnown"), 'g', 2));
-    ui->knownWordsPercent->setText(QString::number(currentText.getWordsPercent("known"), 'g', 2));
-    ui->ignoredWordsPercent->setText(QString::number(currentText.getWordsPercent("ignored"), 'g', 2));
-    ui->wellKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("wellKnown"), 'g', 2));
+    ui->newWordsPercent->setText(QString::number(currentText.getWordsPercent("new"), 'f', 2) + "%");
+    ui->unknownWordsPercent->setText(QString::number(currentText.getWordsPercent("unknown"), 'f', 2) + "%");
+    ui->nearlyUnknownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyUnknown"), 'f', 2) + "%");
+    ui->learningWordsPercent->setText(QString::number(currentText.getWordsPercent("learning"), 'f', 2) + "%");
+    ui->nearlyKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("nearlyKnown"), 'f', 2) + "%");
+    ui->knownWordsPercent->setText(QString::number(currentText.getWordsPercent("known"), 'f', 2) + "%");
+    ui->ignoredWordsPercent->setText(QString::number(currentText.getWordsPercent("ignored"), 'f', 2) + "%");
+    ui->wellKnownWordsPercent->setText(QString::number(currentText.getWordsPercent("wellKnown"), 'f', 2) + "%");
+    ui->textReadability->setText(QString::number(currentText.getTextReadability(), 'f', 2) + "%");
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -107,6 +119,7 @@ void MainWindow::on_pushButton_clicked()
     ui->pushButton_2->setEnabled(true);
     getStatistics();
     ui->groupBox->setHidden(false);
+    ui->groupBox_2->setHidden(false);
 }
 
 void MainWindow::updateWordData(const QString &word, const QString &color, WordData &currentWord) {
@@ -119,6 +132,8 @@ void MainWindow::updateWordData(const QString &word, const QString &color, WordD
     wordHashList.insert(word, currentWord);
     if(!changesInWord)
         changesInWord = true;
+    currentText.setWordColors(wordHashList);
+    getStatistics();
 }
 
 void MainWindow::updateText(const QString &newText)
@@ -126,6 +141,7 @@ void MainWindow::updateText(const QString &newText)
     currentText = Text(false, newText, wordHashList);
     highlighter->setWordColorRule(currentText.getWordColors());
     highlighter->rehighlight();
+    getStatistics();
 }
 
 void MainWindow::saveWordsToCSV(const QString& filePath) {
@@ -216,15 +232,15 @@ void MainWindow::loadWordsFromCSV(const QString& filePath) {
 void MainWindow::closeEvent(QCloseEvent *event) {
 
     if(changesInWord){
-    ExitDialog dialog(this);
-    if (dialog.exec() == QDialog::Accepted) {
-        saveWordsToCSV(termDictFilePath);
-        QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
-        event->accept();
-    }
-    else {
-        event->accept();
-    }
+        ExitDialog dialog(this);
+        if (dialog.exec() == QDialog::Accepted) {
+            saveWordsToCSV(termDictFilePath);
+            QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
+            event->accept();
+        }
+        else {
+            event->accept();
+        }
     }
 }
 
@@ -256,7 +272,7 @@ void MainWindow::on_pushButton_2_clicked()
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
 
-    //highlighter->rehighlight();
+    getStatistics();
 }
 
 void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1)
@@ -267,4 +283,3 @@ void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &a
         highlighter->setSpaceSize(20);
     highlighter->rehighlight();
 }
-

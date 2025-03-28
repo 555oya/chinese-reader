@@ -27,6 +27,7 @@ public:
     QMap<QString, QString> getWordColors();
 
     double getWordsPercent(const QString &status);
+    double getTextReadability();
 
 private:
     QString originalText;
@@ -35,6 +36,7 @@ private:
     QStringList wordsStrList;
     QMap<QString, QString> wordColors;
     QHash<QString, WordData> textWords;
+    const QHash<QString, WordData> *dictionary;
 };
 
 #endif // TEXT_H

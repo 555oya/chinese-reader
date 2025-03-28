@@ -77,7 +77,6 @@ EditTermDialog::EditTermDialog(QHash<QString, WordData> &wordList, const QString
         delete ui->exampleTextEdit; // Удаляем старый текстовый виджет
 
         ui->pushButton->setText("Check result");
-        ui->buttonBox->setEnabled(false);
     }
 }
 
@@ -210,4 +209,3 @@ void EditTermDialog::on_pushButton_clicked()
         delete exampleLabel; // Удаляем старый текстовый виджет
     }
 }
-
