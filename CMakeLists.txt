@@ -34,7 +34,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         text.h text.cpp
 
         library.h library.cpp library.ui
-        dbmanager.cpp dbmanager.h dictionarydialog.cpp dictionarydialog.h
+        dbmanager.cpp dbmanager.h
+        dictionarydialog.h dictionarydialog.cpp dictionarydialog.ui
+
 
     )
 # Define target properties for Android with Qt 6 as:
