@@ -8,16 +8,17 @@ Text::Text()
 
 }
 
-Text::Text(bool FromFile, const QString &newText, const QHash<QString, WordData> &wordHashList) {
+Text::Text(bool FromFile, const QString &newText, const DbManager *dbManager) {
     if (FromFile)
         readFromFile(newText);
     else
         setTextStr(newText);
 
-    parseTextWords();
-    setWordColors(wordHashList);
+    this->dbManager = dbManager;
+    //parseTextWords();
+    //setWordColors(wordHashList);
     formatText();
-    dictionary = &wordHashList;
+    //dictionary = &wordHashList;
 }
 
 void Text::setTextStr(const QString &newText)
@@ -27,7 +28,7 @@ void Text::setTextStr(const QString &newText)
 
 void Text::readFromFile(const QString &newfile)
 {
-    QFile file = newfile;
+    QFile file{newfile};
     if (!file.exists()) { // Checks if exists
         qDebug("File doesn't exist!");
         return;
@@ -97,7 +98,7 @@ void Text::formatText()
     textStr.remove(regex2);
 }
 
-void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
+void Text::cutToWords()
 {
     cppjieba::Jieba jieba(
         "dict/jieba.dict.utf8",
@@ -116,8 +117,8 @@ void Text::cutToWords(const QHash<QString, WordData> &wordHashList)
 
     result = limonp::Join(words.begin(), words.end(), " ");
     textStr = QString::fromStdString(result);
-    parseTextWords();
-    setWordColors(wordHashList);
+    //parseTextWords();
+    //setWordColors(wordHashList);
     formatText();
 
     string text = textStr.toStdString();
@@ -147,8 +148,8 @@ double Text::getWordsPercent(const QString &status)
 
     double count = 0;
     for (auto &word : allWords) {
-        if (dictionary->contains(word)) {
-            if(dictionary->find(word).value().getStatus().compare(status) == 0)
+        if (dbManager->wordExists(word)) {
+            if(dbManager->getWord(word).getStatus().compare(status) == 0)
                 count++;
         }
         else if (status.compare("new") == 0) {
@@ -174,21 +175,22 @@ double Text::getTextReadability()
     QRegularExpression multipleSpacesRegex("\\s+");
     cleanedText.replace(multipleSpacesRegex, " ");
     cleanedText = cleanedText.trimmed(); //удаляем пробелы в самом начале и в конце
-
+    qDebug() << cleanedText;
     allWords = cleanedText.split(" ");
 
     QList<QPair<double, double>> wordFreq;
 
-    for (auto &word : wordsStrList) {
+    for (auto &word : allWords) {
+        qDebug() << word;
         double count = allWords.count(word);
-        if (dictionary->contains(word)) {
-            if(dictionary->find(word).value().getStatus().compare("wellKnown") == 0)
+        if (dbManager->wordExists(word)) {
+            if(dbManager->getWord(word).getStatus().compare("wellKnown") == 0)
                 wordFreq.append(QPair<double, double>(count, 1));
-            if(dictionary->find(word).value().getStatus().compare("known") == 0)
+            if(dbManager->getWord(word).getStatus().compare("known") == 0)
                 wordFreq.append(QPair<double, double>(count, 1));
-            if(dictionary->find(word).value().getStatus().compare("nearlyKnown") == 0)
+            if(dbManager->getWord(word).getStatus().compare("nearlyKnown") == 0)
                 wordFreq.append(QPair<double, double>(count, 0.75));
-            if(dictionary->find(word).value().getStatus().compare("learning") == 0)
+            if(dbManager->getWord(word).getStatus().compare("learning") == 0)
                 wordFreq.append(QPair<double, double>(count, 0.5));
         }
     }
@@ -197,7 +199,7 @@ double Text::getTextReadability()
         sum += (word_pair.first * word_pair.second);
 
     double percent = sum * 100.0 / (double)allWords.size();
-
+    qDebug() << "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ";
     return percent;
 }
 

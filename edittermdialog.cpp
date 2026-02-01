@@ -10,22 +10,19 @@ EditTermDialog::EditTermDialog(const QString &word, QWidget *parent)
     ui->radioBtnUnknown->setChecked(true);
 }
 
-EditTermDialog::EditTermDialog(QHash<QString, WordData> &wordList, const QString &word, QWidget *parent)
+EditTermDialog::EditTermDialog(DbManager *dbManager, const QString &word, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::EditTermDialog)
 {
     ui->setupUi(this);
-    wordListPointer = &wordList;
+    this->dbManager = dbManager;
+    //wordListPointer = &wordList;
     currentWordString = word;
     ui->wordLabel->setText(word); // Устанавливаем слово в label
     ui->radioBtnUnknown->setChecked(true);
     editable = true;
 
-    linkedTermsLabel = new QLabel();
-    ui->formLayout_3->replaceWidget(ui->linkedTermsTextEdit, linkedTermsLabel);
-    delete ui->linkedTermsTextEdit; // Удаляем старый текстовый виджет
-
-    if (wordListPointer->contains(word)){
+    if (dbManager->wordExists(word)){
         meaningLabel = new QLabel();
         ui->formLayout_3->replaceWidget(ui->meaningTextEdit, meaningLabel);
         delete ui->meaningTextEdit; // Удаляем старый текстовый виджет
@@ -42,23 +39,23 @@ EditTermDialog::EditTermDialog(QHash<QString, WordData> &wordList, const QString
         pinyinLabel->setWordWrap(true);
         exampleLabel->setWordWrap(true);
 
-        meaningLabel->setText(wordList.value(word).getTranslation());
-        pinyinLabel->setText(wordList.value(word).getRomanization());
-        exampleLabel->setText(wordList.value(word).getSentence());
+        meaningLabel->setText(dbManager->getWord(word).getTranslation());
+        pinyinLabel->setText(dbManager->getWord(word).getRomanization());
+        exampleLabel->setText(dbManager->getWord(word).getSentence());
 
-        if(wordList.value(word).getStatus().compare("unknown") == 0)
+        if(dbManager->getWord(word).getStatus().compare("unknown") == 0)
             ui->radioBtnUnknown->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("nearlyUnknown") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("nearlyUnknown") == 0)
             ui->radioBtnBetter->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("learning") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("learning") == 0)
             ui->radioBtnLearning->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("nearlyKnown") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("nearlyKnown") == 0)
             ui->radioBtnNearlyKnown->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("known") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("known") == 0)
             ui->radioBtnKnown->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("ignored") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("ignored") == 0)
             ui->radioBtnIgnore->setChecked(true);
-        else if(wordList.value(word).getStatus().compare("wellKnown") == 0)
+        else if(dbManager->getWord(word).getStatus().compare("wellKnown") == 0)
             ui->radioBtnWellKnown->setChecked(true);
 
         editable = false;
@@ -136,7 +133,8 @@ void EditTermDialog::on_buttonBox_accepted()
 
     qDebug() << "Put info" << selectedColor();
 
-    wordListPointer->insert(currentWordString, currentWord);
+    //wordListPointer->insert(currentWordString, currentWord);
+    dbManager->addOrUpdateWord(currentWordString, currentWord);
 }
 
 

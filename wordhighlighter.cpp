@@ -1,7 +1,7 @@
 #include "wordhighlighter.h"
 #include <QFile>
 
-WordHighlighter::WordHighlighter(QTextDocument *parent) : QSyntaxHighlighter(parent) {
+WordHighlighter::WordHighlighter(const DbManager *dbManager, QTextDocument *parent) : QSyntaxHighlighter(parent) {
     newWordFormat.setBackground(QColor(170,170,255,125));
     unknownWordFormat.setBackground(QColor(255,83,169,125));
     nearlyUnknownWordFormat.setBackground(QColor(255,85,0,125));
@@ -10,6 +10,8 @@ WordHighlighter::WordHighlighter(QTextDocument *parent) : QSyntaxHighlighter(par
     knownWordFormat.setBackground(QColor(0,255,0,125));
     ignoredWordFormat.setBackground(QColor(140,140,140,125));
     wellKnownWordFormat.setBackground(QColor(170,170,255,0));
+
+    this->dbManager = dbManager;
 
     spaceSize = 20;
 }
@@ -79,13 +81,30 @@ void WordHighlighter::highlightBlock(const QString &text) {
     QStringList wordsList = text.split(" ");
 
     for (QString &word : wordsList) {
-        if (highlightingRules.contains(word)) {
-            HighlightingRule rule = highlightingRules.value(word);
+
+        QRegularExpression regex("[^\\x{4E00}-\\x{9FFF}]");
+        QString result = word.remove(regex);
+        if (dbManager->wordExists(word)) {
+            HighlightingRule rule;
+            QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(word)));
+            rule.pattern = regex;
+            rule.format = checkStatus(dbManager->getWord(word).getStatus());
             QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
-            while (matchIterator.hasNext()) {
-                QRegularExpressionMatch match = matchIterator.next();
-                setFormat(match.capturedStart(), match.capturedLength(), rule.format);
-            }
+            QRegularExpressionMatch match = matchIterator.next();
+            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+            // while (matchIterator.hasNext()) {
+            //     QRegularExpressionMatch match = matchIterator.next();
+            //     setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+            // }
+        }
+        else if (!word.isEmpty()) {
+            HighlightingRule rule;
+            QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(word)));
+            rule.pattern = regex;
+            rule.format = checkStatus("new");
+            QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
+            QRegularExpressionMatch match = matchIterator.next();
+            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
         }
     }
 

@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QMap>
 
+#include "dbmanager.h"
 #include "worddata.h"
 #include "cppjieba/Jieba.hpp"
 
@@ -13,14 +14,14 @@ class Text
 {
 public:
     Text();
-    Text(bool readFromFile, const QString &newText, const QHash<QString, WordData> &wordHashList);
+    Text(bool readFromFile, const QString &newText, const DbManager *dbManager);
 
     void setTextStr(const QString& newText);
     void readFromFile(const QString& file);
     void setWordColors(const QHash<QString, WordData> &wordHashList);
     void parseTextWords();
     void formatText();
-    void cutToWords(const QHash<QString, WordData> &wordHashList);
+    void cutToWords();
 
     QString getTextStr();
     QStringList getTextWords();
@@ -37,6 +38,7 @@ private:
     QMap<QString, QString> wordColors;
     QHash<QString, WordData> textWords;
     const QHash<QString, WordData> *dictionary;
+    const DbManager *dbManager;
 };
 
 #endif // TEXT_H

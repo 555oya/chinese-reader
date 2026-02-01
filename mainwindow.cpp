@@ -12,29 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    CustomTextEdit *customTextEdit = new CustomTextEdit(this);
-    ui->gridLayout->replaceWidget(ui->textEdit, customTextEdit);
-    delete ui->textEdit; // Удаляем старый текстовый виджет
-    ui->textEdit = customTextEdit;
-    QFont font("SimSun", 20);
-    ui->textEdit->setFont(font);
-
-    highlighter = new WordHighlighter(customTextEdit->document());
-
-    currentText = Text();
-
     settings = new QSettings(this);
     loadSettings();
 
-    ui->checkBoxHideSpaces->setCheckState(Qt::Checked);
-
-    connect(customTextEdit, &CustomTextEdit::wordDataHasChanged, this, &MainWindow::updateWordData);
-    connect(customTextEdit, &CustomTextEdit::textHasChanged, this, &MainWindow::updateText);
-
-    changesInWord = false;
-
-    loadSettings();
-    qDebug() << "defaultFolderSet " << defaultFolderSet;
     if (!defaultFolderSet) {
         QMessageBox::information(this, "Choose folder", "Select a directory for chinese-reader", QMessageBox::Ok);
         folderPath = QFileDialog::getExistingDirectory(this, tr("Choose directory"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
@@ -52,6 +32,35 @@ MainWindow::MainWindow(QWidget *parent)
     termDictFilePath = folderPath + "/terms/term-dict.csv";
     defaultOpenFileFolderPath = folderPath + "/texts";
     termDictFolderPath = folderPath + "/terms";
+    databasePath = folderPath + "/database.db";
+
+    dbManager = new DbManager(databasePath, this);
+
+    if (!dbManager->openDatabase()) {
+        QMessageBox::warning(this, "Database Error",
+                             QString("Cannot open database: %1").arg(dbManager->getLastError()));
+    }
+
+    if (!dbManager->createTables()) {
+        QMessageBox::warning(this, "Database Error",
+                             QString("Cannot create tables: %1").arg(dbManager->getLastError()));
+    }
+
+    CustomTextEdit *customTextEdit = new CustomTextEdit(dbManager,ui->statusbar);
+    ui->gridLayout->replaceWidget(ui->textEdit, customTextEdit);
+    delete ui->textEdit; // Удаляем старый текстовый виджет
+    ui->textEdit = customTextEdit;
+    QFont font("SimSun", 20);
+    ui->textEdit->setFont(font);
+
+    currentText = Text();
+
+    connect(customTextEdit, &CustomTextEdit::wordDataHasChanged, this, &MainWindow::updateWordData);
+    connect(customTextEdit, &CustomTextEdit::textHasChanged, this, &MainWindow::updateText);
+
+    changesInWord = false;
+
+    qDebug() << "defaultFolderSet " << defaultFolderSet;
 
     if(QFile::exists(termDictFilePath))
         loadWordsFromCSV(termDictFilePath);
@@ -62,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_2->setEnabled(false);
     ui->groupBox->setHidden(true);
     ui->groupBox_2->setHidden(true);
+    ui->dictionaryButton->show();
 
     int max_width = ui->nearlyUnknownWordsPercent->width();
     ui->label->setFixedWidth(max_width);
@@ -72,6 +82,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_5->setFixedWidth(max_width);
     ui->label_6->setFixedWidth(max_width);
     ui->label_7->setFixedWidth(max_width);
+
+    highlighter = new WordHighlighter(dbManager, customTextEdit->document());
+    highlighter->setSpaceSize(1);
 }
 
 MainWindow::~MainWindow()
@@ -81,16 +94,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete settings;
     delete highlighter;
-}
-
-QHash<QString, WordData> &MainWindow::getWordHashList()
-{
-    return wordHashList;
-}
-
-Text &MainWindow::getCurrentText()
-{
-    return currentText;
+    delete dbManager;  // Удаляем менеджер базы данных
 }
 
 void MainWindow::getStatistics()
@@ -110,9 +114,9 @@ void MainWindow::on_pushButton_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), defaultOpenFileFolderPath, tr("Text files (*.txt)"));
     qDebug() << "Text folder " << defaultOpenFileFolderPath;
-    currentText = Text(true, fileName, wordHashList);
+    currentText = Text(true, fileName, dbManager);
 
-    highlighter->setWordColorRule(currentText.getWordColors());
+    // highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
     ui->saveButton->setEnabled(true);
@@ -124,47 +128,39 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::updateWordData(const QString &word, const QString &color, WordData &currentWord) {
     qDebug() << "Changing color for word:" << word << " to " << color;
-    QMap<QString, QString> updatedWord;
-    updatedWord.insert(word, color);
-    highlighter->changeWordColorRule(updatedWord);
-    highlighter->rehighlight();
 
-    wordHashList.insert(word, currentWord);
-    if(!changesInWord)
-        changesInWord = true;
-    currentText.setWordColors(wordHashList);
+    highlighter->rehighlight();
     getStatistics();
 }
 
 void MainWindow::updateText(const QString &newText)
 {
-    currentText = Text(false, newText, wordHashList);
-    highlighter->setWordColorRule(currentText.getWordColors());
+    currentText = Text(false, newText, dbManager);
     highlighter->rehighlight();
     getStatistics();
 }
 
 void MainWindow::saveWordsToCSV(const QString& filePath) {
-    qDebug() << "Saving to file path: " << filePath;
-    QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&file);
-        for (auto wordItem = wordHashList.begin(); wordItem != wordHashList.end(); ++wordItem) {
-            out << "\"" << wordItem.key() << "\"" << ","
-                << "\"" << wordItem->getTranslation().replace("\n", "<br>") << "\"" << ","
-                << "\"" << wordItem->getRomanization().replace("\n", "<br>") << "\"" << ","
-                << "\"" << wordItem->getSentence().replace("\n", "<br>") << "\"" << ","
-                << "\"" << wordItem->getStatus() << "\"" << ","
-                << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
-            qDebug() << "\"" << wordItem.key() << "\"" << ","
-                     << "\"" << wordItem->getTranslation() << "\"" << ","
-                     << "\"" << wordItem->getRomanization() << "\"" << ","
-                     << "\"" << wordItem->getSentence() << "\"" << ","
-                     << "\"" << wordItem->getStatus() << "\"" << ","
-                     << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
-        }
-        file.close();
-    }
+    // qDebug() << "Saving to file path: " << filePath;
+    // QFile file(filePath);
+    // if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    //     QTextStream out(&file);
+    //     for (auto wordItem = wordHashList.begin(); wordItem != wordHashList.end(); ++wordItem) {
+    //         out << "\"" << wordItem.key() << "\"" << ","
+    //             << "\"" << wordItem->getTranslation().replace("\n", "<br>") << "\"" << ","
+    //             << "\"" << wordItem->getRomanization().replace("\n", "<br>") << "\"" << ","
+    //             << "\"" << wordItem->getSentence().replace("\n", "<br>") << "\"" << ","
+    //             << "\"" << wordItem->getStatus() << "\"" << ","
+    //             << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
+    //         qDebug() << "\"" << wordItem.key() << "\"" << ","
+    //                  << "\"" << wordItem->getTranslation() << "\"" << ","
+    //                  << "\"" << wordItem->getRomanization() << "\"" << ","
+    //                  << "\"" << wordItem->getSentence() << "\"" << ","
+    //                  << "\"" << wordItem->getStatus() << "\"" << ","
+    //                  << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
+    //     }
+    //     file.close();
+    // }
 }
 
 QStringList MainWindow::parseCSVLine(const QString& line) {
@@ -193,40 +189,40 @@ QStringList MainWindow::parseCSVLine(const QString& line) {
 }
 
 void MainWindow::loadWordsFromCSV(const QString& filePath) {
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open file for reading:" << file.errorString();
-        return;
-    }
+    // QFile file(filePath);
+    // if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //     qDebug() << "Failed to open file for reading:" << file.errorString();
+    //     return;
+    // }
 
-    wordHashList.clear(); // Очистка перед загрузкой новых данных
+    // wordHashList.clear(); // Очистка перед загрузкой новых данных
 
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList fields = parseCSVLine(line); // Парсим строку, учитывая кавычки
+    // QTextStream in(&file);
+    // while (!in.atEnd()) {
+    //     QString line = in.readLine();
+    //     QStringList fields = parseCSVLine(line); // Парсим строку, учитывая кавычки
 
-        if (fields.size() < 5) { // Минимально ожидаем 5 полей (слово + 4 параметра)
-            qDebug() << "Skipping invalid line:" << line;
-            continue;
-        }
+    //     if (fields.size() < 5) { // Минимально ожидаем 5 полей (слово + 4 параметра)
+    //         qDebug() << "Skipping invalid line:" << line;
+    //         continue;
+    //     }
 
-        QString word = fields[0];
-        QString translation = fields[1].replace("<br>", "\n");
-        QString romanization = fields[2].replace("<br>", "\n");
-        QString sentence = fields[3].replace("<br>", "\n");
-        QString status = fields[4];
-        QStringList linkedTerms;
+    //     QString word = fields[0];
+    //     QString translation = fields[1].replace("<br>", "\n");
+    //     QString romanization = fields[2].replace("<br>", "\n");
+    //     QString sentence = fields[3].replace("<br>", "\n");
+    //     QString status = fields[4];
+    //     QStringList linkedTerms;
 
-        if (fields.size() > 5) {
-            linkedTerms = fields[5].split(";", Qt::SkipEmptyParts);
-        }
+    //     if (fields.size() > 5) {
+    //         linkedTerms = fields[5].split(";", Qt::SkipEmptyParts);
+    //     }
 
-        wordHashList.insert(word, WordData(translation, romanization, sentence, status, linkedTerms));
-    }
+    //     wordHashList.insert(word, WordData(translation, romanization, sentence, status, linkedTerms));
+    // }
 
-    file.close();
-    qDebug() << "Loaded words from CSV. Total:" << wordHashList.size();
+    // file.close();
+    // qDebug() << "Loaded words from CSV. Total:" << wordHashList.size();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -267,10 +263,11 @@ void MainWindow::on_saveButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    currentText.cutToWords(wordHashList);
-    highlighter->setWordColorRule(currentText.getWordColors());
+    currentText.cutToWords();
+    //highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
+    highlighter->rehighlight();
 
     getStatistics();
 }
@@ -283,3 +280,16 @@ void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &a
         highlighter->setSpaceSize(20);
     highlighter->rehighlight();
 }
+
+void MainWindow::on_dictionaryButton_clicked()
+{
+    if (!dbManager) {
+        QMessageBox::warning(this, "Error", "Database not initialized");
+        return;
+    }
+
+    DictionaryDialog *dialog = new DictionaryDialog(dbManager, this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->exec();
+}
+

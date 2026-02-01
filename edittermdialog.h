@@ -6,6 +6,7 @@
 #include <QDesktopServices>
 #include <qlabel.h>
 #include <qplaintextedit.h>
+#include "dbmanager.h"
 #include "worddata.h"
 
 namespace Ui {
@@ -18,7 +19,7 @@ class EditTermDialog : public QDialog
 
 public:
     explicit EditTermDialog(const QString &word, QWidget *parent = nullptr);
-    explicit EditTermDialog(QHash<QString, WordData> &wordList, const QString &word, QWidget *parent = nullptr);
+    explicit EditTermDialog(DbManager *dbManager, const QString &word, QWidget *parent = nullptr);
     ~EditTermDialog();
 
     QString selectedColor(); // Метод для получения выбранного цвета
@@ -41,6 +42,7 @@ private:
     WordData currentWord;
     QString currentWordString;
     QHash<QString, WordData> *wordListPointer;
+    DbManager *dbManager;
     bool editable;
 
     QLabel *linkedTermsLabel;

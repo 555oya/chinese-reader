@@ -1,9 +1,9 @@
 #include "worddata.h"
 
 WordData::WordData(const QString& translation, const QString& romanization,
-                   const QString& sentence, const QString& status, const QStringList& linkedTerms)
+                   const QString& sentence, const QString& status)
     : translation(translation), romanization(romanization),
-    sentence(sentence), status(status), linkedTerms(linkedTerms) {}
+    sentence(sentence), status(status) {}
 
 WordData::WordData() {
 
@@ -30,15 +30,6 @@ QString WordData::getStatus() const {
     return status;
 }
 
-QString WordData::getTag() const
-{
-    return tag;
-}
-
-QStringList WordData::getLinkedTerms() const {
-    return linkedTerms;
-}
-
 void WordData::setWord(const QString &newWord)
 {
     word = newWord;
@@ -46,11 +37,6 @@ void WordData::setWord(const QString &newWord)
 
 void WordData::setStatus(const QString& newStatus) {
     status = newStatus;
-}
-
-void WordData::setTag(const QString &newTag)
-{
-    tag = newTag;
 }
 
 void WordData::setRomanization(const QString& newRomanization) {
@@ -63,14 +49,4 @@ void WordData::setSentence(const QString& newSentence) {
 
 void WordData::setTranslation(const QString& newTranslation) {
     translation = newTranslation;
-}
-
-void WordData::setLinkedTerms(const QStringList& newLinkedTerms) {
-    linkedTerms = newLinkedTerms;
-}
-
-void WordData::addLinkedTerm(const QString& term) {
-    if (!linkedTerms.contains(term)) {
-        linkedTerms.append(term);
-    }
 }

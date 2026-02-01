@@ -216,7 +216,7 @@ void CustomTextEdit::mouseDoubleClickEvent(QMouseEvent *event) {
         cleanedText.remove(removeNonChineseRegex);
         if (!cleanedText.isEmpty()) {
             qDebug() << "Clicked word:" << clickedWord; // Выводим в debug
-            EditTermDialog dialog(mainWindow->getWordHashList(), clickedWord, this);
+            EditTermDialog dialog(dbManager, clickedWord, this);
             if (dialog.exec() == QDialog::Accepted) {
                 qDebug() << "Accepted";
                 QString chosenColor = dialog.selectedColor();
@@ -242,9 +242,13 @@ void CustomTextEdit::mouseMoveEvent(QMouseEvent *event) {
     if (word != lastHoveredWord && !word.isEmpty()) { // Проверяем, изменилось ли слово
         lastHoveredWord = word; // Обновляем последнее слово
         if (!word.isEmpty()) {
-            if (mainWindow) { // Проверяем, что указатель не null
-                QString message = word + " — " + mainWindow->getWordHashList().value(word).getRomanization() + " — " + mainWindow->getWordHashList().value(word).getTranslation();
-                mainWindow->statusBar()->showMessage(message); // Обращаемся к статус-бару
+            if (dbManager->wordExists(word)) { // Проверяем, что указатель не null
+                QString message = word + " — " + dbManager->getWord(word).getRomanization() + " — " + dbManager->getWord(word).getTranslation();
+                statusBar->showMessage(message); // Обращаемся к статус-бару
+            }
+            else {
+                QString message = word + " — " + " — ";
+                statusBar->showMessage(message); // Обращаемся к статус-бару
             }
         }
     }

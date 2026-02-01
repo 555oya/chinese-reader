@@ -17,12 +17,14 @@ class CustomTextEdit : public QPlainTextEdit {
     Q_OBJECT
 
 public:
-    explicit CustomTextEdit(MainWindow *mainWin, QWidget *parent = nullptr) : QPlainTextEdit(parent), mainWindow(mainWin) {
+    explicit CustomTextEdit(DbManager *dbManager, QStatusBar *statusBar, QWidget *parent = nullptr) : QPlainTextEdit(parent) {
         setMouseTracking(true); // Включаем отслеживание движения мыши
         setReadOnly(true);
         QFont newfont("SimSun", 20);
         font = newfont;
         setFont(font);
+        this->dbManager = dbManager;
+        this->statusBar = statusBar;
     }
 
 private slots:
@@ -57,6 +59,9 @@ private:
     MainWindow *mainWindow; // Указатель на MainWindow
     QString lastHoveredWord; // Последнее выделенное слово
     QContextMenuEvent *rmbEvent;
+
+    DbManager *dbManager;
+    QStatusBar *statusBar;
 
     QFont font;
 };

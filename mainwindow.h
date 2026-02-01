@@ -7,9 +7,11 @@
 #include <QStandardPaths>
 #include <QSettings>
 
+#include "dbmanager.h"
 #include "wordhighlighter.h"
 #include "worddata.h"
 #include "exitdialog.h"
+#include "dictionarydialog.h"
 #include "cppjieba/Jieba.hpp"
 #include "text.h"
 
@@ -27,9 +29,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QHash<QString, WordData> &getWordHashList();
     void parseText(QString text);
-    Text& getCurrentText();
     void getStatistics();
 
 private slots:
@@ -40,6 +40,8 @@ private slots:
     void on_pushButton_2_clicked();
     void on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1);
 
+    void on_dictionaryButton_clicked();
+
 private:
     QSettings * settings;
     bool defaultFolderSet;
@@ -47,7 +49,7 @@ private:
     Ui::MainWindow *ui;
     WordHighlighter* highlighter;
     cppjieba::Jieba *jieba;
-    QHash<QString, WordData> wordHashList;
+    DbManager *dbManager;  // Добавляем указатель на менеджер базы данных
 
     void saveWordsToCSV(const QString& filePath);
     QStringList parseCSVLine(const QString& line);
@@ -63,5 +65,6 @@ private:
     QString termDictFilePath;
     QString termDictFolderPath;
     QString defaultOpenFileFolderPath;
+    QString databasePath;  // Путь к базе данных
 };
 #endif // MAINWINDOW_H
