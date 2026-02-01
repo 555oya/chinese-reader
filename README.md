@@ -2,12 +2,21 @@
 
 Thanks to [Yanyi Wu](https://github.com/yanyiwu) for his [cppjieba](https://github.com/yanyiwu/cppjieba) repo.
 
-With this app is designed to help chinese learners to read different texts. They say you need to read texts for comprehensixe inut. But how do you know if the text is right for you? Try this app and make your path to finding right texts easier.
+Chinese Reader is a professional desktop application designed for Chinese language learners. It intelligently analyzes Chinese texts, builds personal vocabulary banks, and tracks learning progress using advanced word segmentation and interactive text highlighting.
 
-1. Make .txt file with your text.
-2. Open if with the program.
-3. Cut your text to words.
-4. Mark how well you know the words.
+## ✨ Features
+### Text Processing
+- **Automatic Word Segmentation:** Powered by cppjieba library to accurately segment continuous Chinese text into individual words
+- **Multi-format Support:** Just copy your text to .txt file and you're good to go
+- **Readability Analysis:** Calculate text difficulty based on your known vocabulary
+### Interactive Learning Tool
+- **Smart Word Highlighting:** Color-coded text based on word familiarity status
+- **In-context Vocabulary Building:** Double-click any word to edit its details directly
+- **Progress Tracking:** Real-time statistics showing your comprehension level
+### Comprehensive Vocabulary Management
+- **8-Level Proficiency System:** Categorize words from "Unknown" to "Well Known"
+- **Rich Word Details:** Add pinyin, translations and examples
+- **Personal Dictionary:** Build and maintain your custom vocabulary database
 
 ## Interface
 
