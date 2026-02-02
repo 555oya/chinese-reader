@@ -78,41 +78,32 @@ void WordHighlighter::setWordColorRule(const QMap<QString, QString> &colorMap) {
 }
 
 void WordHighlighter::highlightBlock(const QString &text) {
-    QStringList wordsList = text.split(" ");
 
-    for (QString &word : wordsList) {
+    // Используем регулярное выражение для поиска китайских слов
+    QRegularExpression chineseWordRegex("[\u4e00-\u9fff]+");
+    QRegularExpressionMatchIterator wordIterator = chineseWordRegex.globalMatch(text);
 
-        QRegularExpression regex("[^\\x{4E00}-\\x{9FFF}]");
-        QString result = word.remove(regex);
+    while (wordIterator.hasNext()) {
+        QRegularExpressionMatch match = wordIterator.next();
+        QString word = match.captured();
+
         if (dbManager->wordExists(word)) {
-            HighlightingRule rule;
-            QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(word)));
-            rule.pattern = regex;
-            rule.format = checkStatus(dbManager->getWord(word).getStatus());
-            QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
-            QRegularExpressionMatch match = matchIterator.next();
-            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
-            // while (matchIterator.hasNext()) {
-            //     QRegularExpressionMatch match = matchIterator.next();
-            //     setFormat(match.capturedStart(), match.capturedLength(), rule.format);
-            // }
-        }
-        else if (!word.isEmpty()) {
-            HighlightingRule rule;
-            QRegularExpression regex(QString(R"((?<!\S)%1(?!\S))").arg(QRegularExpression::escape(word)));
-            rule.pattern = regex;
-            rule.format = checkStatus("new");
-            QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
-            QRegularExpressionMatch match = matchIterator.next();
-            setFormat(match.capturedStart(), match.capturedLength(), rule.format);
+            // Слово есть в базе данных
+            WordData wordData = dbManager->getWord(word);
+            QTextCharFormat format = checkStatus(wordData.getStatus());
+            setFormat(match.capturedStart(), match.capturedLength(), format);
+        } else {
+            // Новое слово
+            QTextCharFormat format = checkStatus("new");
+            setFormat(match.capturedStart(), match.capturedLength(), format);
         }
     }
 
+    // Обработка пробелов (ваш существующий код)
     QTextCharFormat fmt;
     fmt.setFontPointSize(spaceSize);
 
-    // Регулярное выражение для поиска **только пробелов, не включая \n**
-    QRegularExpression whitespaceRegex("[ ]+");  // Исключаем \n
+    QRegularExpression whitespaceRegex("[ ]+");
     QRegularExpressionMatchIterator wsMatchIterator = whitespaceRegex.globalMatch(text);
 
     while (wsMatchIterator.hasNext()) {

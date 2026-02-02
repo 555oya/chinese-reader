@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     qDebug() << "defaultFolderSet " << defaultFolderSet;
 
-    ui->pushButton_2->setEnabled(false);
     ui->groupBox->setHidden(true);
     ui->groupBox_2->setHidden(true);
     ui->dictionaryButton->show();
@@ -113,8 +112,13 @@ void MainWindow::on_pushButton_clicked()
     qDebug() << "Text folder " << defaultOpenFileFolderPath;
     currentText = Text(true, fileName, dbManager);
 
+    currentText.cutToWords();
+
     this->ui->textEdit->setPlainText(currentText.getTextStr());
-    ui->pushButton_2->setEnabled(true);
+    highlighter->rehighlight();
+
+    getStatistics();
+    //ui->pushButton_2->setEnabled(true);
     getStatistics();
     ui->groupBox->setHidden(false);
     ui->groupBox_2->setHidden(false);
@@ -146,16 +150,6 @@ void MainWindow::loadSettings()
     defaultFolderSet = settings->value("defaultFolderSet").toBool();
 
     qDebug() << "folder path: " << folderPath;
-}
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    currentText.cutToWords();
-
-    this->ui->textEdit->setPlainText(currentText.getTextStr());
-    highlighter->rehighlight();
-
-    getStatistics();
 }
 
 void MainWindow::on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1)

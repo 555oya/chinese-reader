@@ -36,7 +36,6 @@ private slots:
     void on_pushButton_clicked();
     void updateWordData(const QString &word, const QString &color, WordData &currentWord);
     void updateText(const QString &word);
-    void on_pushButton_2_clicked();
     void on_checkBoxHideSpaces_checkStateChanged(const Qt::CheckState &arg1);
 
     void on_dictionaryButton_clicked();
