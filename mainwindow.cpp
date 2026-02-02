@@ -67,7 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
     else
         qDebug() << "There is no term-sict.csv!! Path: " << termDictFilePath;
 
-    ui->saveButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->groupBox->setHidden(true);
     ui->groupBox_2->setHidden(true);
@@ -119,7 +118,6 @@ void MainWindow::on_pushButton_clicked()
     // highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
-    ui->saveButton->setEnabled(true);
     ui->pushButton_2->setEnabled(true);
     getStatistics();
     ui->groupBox->setHidden(false);
@@ -252,13 +250,6 @@ void MainWindow::loadSettings()
     defaultFolderSet = settings->value("defaultFolderSet").toBool();
 
     qDebug() << "folder path: " << folderPath;
-}
-
-void MainWindow::on_saveButton_clicked()
-{
-    saveWordsToCSV(termDictFilePath);
-    QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
-    changesInWord = false;
 }
 
 void MainWindow::on_pushButton_2_clicked()
