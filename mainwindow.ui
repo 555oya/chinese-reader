@@ -127,7 +127,7 @@
           <string notr="true">background-color: rgba(255,85,0, 0.5);</string>
          </property>
          <property name="text">
-          <string>A bit better than unknown</string>
+          <string>Nearly unknown</string>
          </property>
         </widget>
        </item>

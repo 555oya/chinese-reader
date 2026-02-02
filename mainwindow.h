@@ -52,11 +52,7 @@ private:
     cppjieba::Jieba *jieba;
     DbManager *dbManager;  // Добавляем указатель на менеджер базы данных
 
-    void saveWordsToCSV(const QString& filePath);
-    QStringList parseCSVLine(const QString& line);
-    void loadWordsFromCSV(const QString& filePath);
     bool changesInWord;
-    void closeEvent(QCloseEvent *event);
     void saveSettings();
     void loadSettings();
     void applySettings();

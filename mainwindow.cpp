@@ -65,11 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     qDebug() << "defaultFolderSet " << defaultFolderSet;
 
-    if(QFile::exists(termDictFilePath))
-        loadWordsFromCSV(termDictFilePath);
-    else
-        qDebug() << "There is no term-sict.csv!! Path: " << termDictFilePath;
-
     ui->pushButton_2->setEnabled(false);
     ui->groupBox->setHidden(true);
     ui->groupBox_2->setHidden(true);
@@ -118,8 +113,6 @@ void MainWindow::on_pushButton_clicked()
     qDebug() << "Text folder " << defaultOpenFileFolderPath;
     currentText = Text(true, fileName, dbManager);
 
-    // highlighter->setWordColorRule(currentText.getWordColors());
-
     this->ui->textEdit->setPlainText(currentText.getTextStr());
     ui->pushButton_2->setEnabled(true);
     getStatistics();
@@ -141,106 +134,6 @@ void MainWindow::updateText(const QString &newText)
     getStatistics();
 }
 
-void MainWindow::saveWordsToCSV(const QString& filePath) {
-    // qDebug() << "Saving to file path: " << filePath;
-    // QFile file(filePath);
-    // if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-    //     QTextStream out(&file);
-    //     for (auto wordItem = wordHashList.begin(); wordItem != wordHashList.end(); ++wordItem) {
-    //         out << "\"" << wordItem.key() << "\"" << ","
-    //             << "\"" << wordItem->getTranslation().replace("\n", "<br>") << "\"" << ","
-    //             << "\"" << wordItem->getRomanization().replace("\n", "<br>") << "\"" << ","
-    //             << "\"" << wordItem->getSentence().replace("\n", "<br>") << "\"" << ","
-    //             << "\"" << wordItem->getStatus() << "\"" << ","
-    //             << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
-    //         qDebug() << "\"" << wordItem.key() << "\"" << ","
-    //                  << "\"" << wordItem->getTranslation() << "\"" << ","
-    //                  << "\"" << wordItem->getRomanization() << "\"" << ","
-    //                  << "\"" << wordItem->getSentence() << "\"" << ","
-    //                  << "\"" << wordItem->getStatus() << "\"" << ","
-    //                  << "\"" << wordItem->getLinkedTerms().join(";") << "\"" << "\n";
-    //     }
-    //     file.close();
-    // }
-}
-
-QStringList MainWindow::parseCSVLine(const QString& line) {
-    QStringList fields;
-    QString currentField;
-    bool inQuotes = false;
-
-    for (int i = 0; i < line.length(); ++i) {
-        QChar c = line[i];
-
-        if (c == '"') {
-            inQuotes = !inQuotes;
-        } else if (c == ',' && !inQuotes) {
-            fields.append(currentField.trimmed());
-            currentField.clear();
-        } else {
-            currentField.append(c);
-        }
-    }
-
-    if (!currentField.isEmpty()) {
-        fields.append(currentField.trimmed());
-    }
-
-    return fields;
-}
-
-void MainWindow::loadWordsFromCSV(const QString& filePath) {
-    // QFile file(filePath);
-    // if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    //     qDebug() << "Failed to open file for reading:" << file.errorString();
-    //     return;
-    // }
-
-    // wordHashList.clear(); // Очистка перед загрузкой новых данных
-
-    // QTextStream in(&file);
-    // while (!in.atEnd()) {
-    //     QString line = in.readLine();
-    //     QStringList fields = parseCSVLine(line); // Парсим строку, учитывая кавычки
-
-    //     if (fields.size() < 5) { // Минимально ожидаем 5 полей (слово + 4 параметра)
-    //         qDebug() << "Skipping invalid line:" << line;
-    //         continue;
-    //     }
-
-    //     QString word = fields[0];
-    //     QString translation = fields[1].replace("<br>", "\n");
-    //     QString romanization = fields[2].replace("<br>", "\n");
-    //     QString sentence = fields[3].replace("<br>", "\n");
-    //     QString status = fields[4];
-    //     QStringList linkedTerms;
-
-    //     if (fields.size() > 5) {
-    //         linkedTerms = fields[5].split(";", Qt::SkipEmptyParts);
-    //     }
-
-    //     wordHashList.insert(word, WordData(translation, romanization, sentence, status, linkedTerms));
-    // }
-
-    // file.close();
-    // qDebug() << "Loaded words from CSV. Total:" << wordHashList.size();
-}
-
-void MainWindow::closeEvent(QCloseEvent *event) {
-
-    if(changesInWord){
-        ExitDialog dialog(this);
-        if (dialog.exec() == QDialog::Accepted) {
-            saveWordsToCSV(termDictFilePath);
-            QMessageBox::information(this, "Save", "All saved", QMessageBox::Ok);
-            event->accept();
-        }
-        else {
-            event->accept();
-        }
-    }
-}
-
 void MainWindow::saveSettings()
 {
     settings->setValue("folderPath", folderPath);
@@ -258,7 +151,6 @@ void MainWindow::loadSettings()
 void MainWindow::on_pushButton_2_clicked()
 {
     currentText.cutToWords();
-    //highlighter->setWordColorRule(currentText.getWordColors());
 
     this->ui->textEdit->setPlainText(currentText.getTextStr());
     highlighter->rehighlight();
