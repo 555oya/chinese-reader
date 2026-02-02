@@ -41,6 +41,8 @@ private slots:
 
     void on_dictionaryButton_clicked();
 
+    void on_settingsButton_clicked();
+
 private:
     QSettings * settings;
     bool defaultFolderSet;
@@ -57,6 +59,8 @@ private:
     void closeEvent(QCloseEvent *event);
     void saveSettings();
     void loadSettings();
+    void applySettings();
+    void applyTheme(const QString &theme);
 
     Text currentText;
 

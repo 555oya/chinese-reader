@@ -2,6 +2,7 @@
 #include "customtextedit.h"
 #include "./ui_mainwindow.h"
 #include <QFileDialog>
+#include "settingsdialog.h"
 #include "wordhighlighter.h"
 
 using namespace std;
@@ -14,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     settings = new QSettings(this);
     loadSettings();
+
+    applyTheme(settings->value("app/theme", "dark").toString());
 
     if (!defaultFolderSet) {
         QMessageBox::information(this, "Choose folder", "Select a directory for chinese-reader", QMessageBox::Ok);
@@ -284,3 +287,118 @@ void MainWindow::on_dictionaryButton_clicked()
     dialog->exec();
 }
 
+
+void MainWindow::on_settingsButton_clicked()
+{
+    SettingsDialog dialog(settings, this);
+    connect(&dialog, &SettingsDialog::settingsChanged, this, &MainWindow::applySettings);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        applySettings();
+    }
+}
+
+void MainWindow::applySettings()
+{
+    // Применяем шрифт
+    QString fontFamily = settings->value("font/family", "SimSun").toString();
+    int fontSize = settings->value("font/size", 20).toInt();
+    QFont font(fontFamily, fontSize);
+    ui->textEdit->setFont(font);
+
+    // Применяем тему
+    QString theme = settings->value("app/theme", "light").toString();
+    applyTheme(theme);
+
+    // Обновляем пути если изменилась папка
+    QString newFolderPath = settings->value("folderPath", "").toString();
+    if (!newFolderPath.isEmpty() && newFolderPath != folderPath) {
+        folderPath = newFolderPath;
+        termDictFilePath = folderPath + "/terms/term-dict.csv";
+        defaultOpenFileFolderPath = folderPath + "/texts";
+        termDictFolderPath = folderPath + "/terms";
+        databasePath = folderPath + "/database.db";
+
+        // Обновляем пути в базе данных
+        if (dbManager) {
+            delete dbManager;
+            dbManager = new DbManager(databasePath, this);
+
+            if (!dbManager->openDatabase()) {
+                QMessageBox::warning(this, "Database Error",
+                                     QString("Cannot open database: %1").arg(dbManager->getLastError()));
+            }
+
+            if (!dbManager->createTables()) {
+                QMessageBox::warning(this, "Database Error",
+                                     QString("Cannot create tables: %1").arg(dbManager->getLastError()));
+            }
+        }
+    }
+}
+
+void MainWindow::applyTheme(const QString &theme)
+{
+    // Полностью убираем кастомные стили
+    qApp->setStyleSheet("");
+
+    if (theme == "dark") {
+        // Используем системную темную тему
+        qApp->setStyle("Fusion");
+
+        QPalette darkPalette;
+
+        // Базовые цвета для темной темы (аналоги системным)
+        darkPalette.setColor(QPalette::Window, QColor(32, 32, 32));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(35, 35, 35));
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
+        darkPalette.setColor(QPalette::Active, QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::darkGray);
+        darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, Qt::darkGray);
+        darkPalette.setColor(QPalette::Disabled, QPalette::Text, Qt::darkGray);
+        darkPalette.setColor(QPalette::Disabled, QPalette::Light, QColor(53, 53, 53));
+
+        qApp->setPalette(darkPalette);
+
+    } else {
+        // Используем системную светлую тему
+        qApp->setStyle("Fusion");
+
+        QPalette LightPalette;
+
+        // Базовые цвета для светлой темы
+        LightPalette.setColor(QPalette::Window, QColor(240, 243, 246)); // Мягкий голубовато-серый фон
+        LightPalette.setColor(QPalette::WindowText, QColor(33, 33, 33)); // Темно-серый текст
+        LightPalette.setColor(QPalette::Base, QColor(255, 255, 255)); // Белый фон для текстовых полей
+        LightPalette.setColor(QPalette::AlternateBase, QColor(248, 249, 250)); // Альтернативный фон (для таблиц)
+        LightPalette.setColor(QPalette::ToolTipBase, QColor(33, 33, 33)); // Белый фон подсказок
+        LightPalette.setColor(QPalette::ToolTipText, QColor(33, 33, 33)); // Темный текст подсказок
+        LightPalette.setColor(QPalette::Text, QColor(33, 33, 33)); // Основной текст
+        LightPalette.setColor(QPalette::Button, QColor(245, 247, 249)); // Светло-серый фон кнопок
+        LightPalette.setColor(QPalette::ButtonText, QColor(41, 41, 41)); // Темно-серый текст кнопок
+        LightPalette.setColor(QPalette::BrightText, QColor(220, 53, 69)); // Яркий текст (красный для ошибок)
+        LightPalette.setColor(QPalette::Link, QColor(66, 133, 244)); // Приятный синий для ссылок (Google синий)
+        LightPalette.setColor(QPalette::Highlight, QColor(66, 133, 244)); // Синий цвет выделения
+        LightPalette.setColor(QPalette::HighlightedText, QColor(255, 255, 255)); // Белый текст на выделении
+
+        // Активные/неактивные состояния
+        LightPalette.setColor(QPalette::Active, QPalette::Button, QColor(235, 238, 241)); // Активная кнопка чуть темнее
+        LightPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(158, 158, 158)); // Серый для неактивного текста кнопок
+        LightPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(158, 158, 158)); // Серый для неактивного текста окон
+        LightPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(158, 158, 158)); // Серый для неактивного текста
+        LightPalette.setColor(QPalette::Disabled, QPalette::Light, QColor(245, 247, 249)); // Свет для неактивных элементов
+
+        qApp->setPalette(LightPalette);
+    }
+}

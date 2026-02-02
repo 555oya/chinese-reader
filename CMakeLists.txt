@@ -36,6 +36,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         library.h library.cpp library.ui
         dbmanager.cpp dbmanager.h
         dictionarydialog.h dictionarydialog.cpp dictionarydialog.ui
+        settingsdialog.h settingsdialog.cpp settingsdialog.ui
 
 
     )
