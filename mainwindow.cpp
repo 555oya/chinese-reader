@@ -371,7 +371,7 @@ void MainWindow::applyTheme(const QString &theme)
 
         qApp->setPalette(darkPalette);
 
-    } else {
+    } else if (theme == "light") {
         // Используем системную светлую тему
         qApp->setStyle("Fusion");
 
@@ -398,6 +398,34 @@ void MainWindow::applyTheme(const QString &theme)
         LightPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(158, 158, 158)); // Серый для неактивного текста окон
         LightPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(158, 158, 158)); // Серый для неактивного текста
         LightPalette.setColor(QPalette::Disabled, QPalette::Light, QColor(245, 247, 249)); // Свет для неактивных элементов
+
+        qApp->setPalette(LightPalette);
+    } else if (theme == "pink") {
+        // Используем системную светлую тему
+        qApp->setStyle("Fusion");
+
+        QPalette LightPalette;
+
+        LightPalette.setColor(QPalette::Window, QColor(250, 240, 250)); // Светло-лиловый
+        LightPalette.setColor(QPalette::WindowText, QColor(90, 65, 95)); // Темно-лиловый
+        LightPalette.setColor(QPalette::Base, QColor(255, 248, 255));
+        LightPalette.setColor(QPalette::AlternateBase, QColor(248, 235, 248));
+        LightPalette.setColor(QPalette::ToolTipBase, QColor(245, 230, 245));
+        LightPalette.setColor(QPalette::ToolTipText, QColor(110, 80, 115));
+        LightPalette.setColor(QPalette::Text, QColor(95, 70, 100));
+        LightPalette.setColor(QPalette::Button, QColor(245, 230, 240)); // Розово-лиловый
+        LightPalette.setColor(QPalette::ButtonText, QColor(105, 75, 110));
+        LightPalette.setColor(QPalette::BrightText, QColor(220, 110, 180)); // Яркий пурпурный
+        LightPalette.setColor(QPalette::Link, QColor(210, 100, 170));
+        LightPalette.setColor(QPalette::Highlight, QColor(210, 100, 170));
+        LightPalette.setColor(QPalette::HighlightedText, QColor(255, 255, 255));
+
+        // Активные/неактивные состояния
+        LightPalette.setColor(QPalette::Active, QPalette::Button, QColor(245, 220, 230)); // Активная кнопка - чуть темнее
+        LightPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(180, 160, 170)); // Серо-розовый для неактивного
+        LightPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(180, 160, 170));
+        LightPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(180, 160, 170));
+        LightPalette.setColor(QPalette::Disabled, QPalette::Light, QColor(250, 235, 242));
 
         qApp->setPalette(LightPalette);
     }
