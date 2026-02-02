@@ -18,6 +18,13 @@ Chinese Reader is a professional desktop application designed for Chinese langua
 - **Rich Word Details:** Add pinyin, translations and examples
 - **Personal Dictionary:** Build and maintain your custom vocabulary database
 
+## How to Use the Application
+
+1. **Open a Text:** Start by opening a Chinese .txt file through the application's menu.
+2. **View Segmented Text:** The application will automatically segment the text. You can toggle spaces between words for clarity.
+3. **Build Your Dictionary:** Double-click any word to open a dialog. Here you can set its proficiency level (1-8), and add Pinyin, Translation, and Examples.
+4. **Track Your Progress:** Check the statistics panel to see your overall readability percentage for the opened text.
+
 ## Interface
 
 <img width="1187" height="798" alt="Screenshot 2025-08-16 at 15 10 29" src="https://github.com/user-attachments/assets/db9abed6-eb9f-4315-9bf9-a0250075244e" />
