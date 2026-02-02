@@ -27,34 +27,41 @@ Chinese Reader is a professional desktop application designed for Chinese langua
 
 ## Interface
 
-<img width="1187" height="798" alt="Screenshot 2025-08-16 at 15 10 29" src="https://github.com/user-attachments/assets/db9abed6-eb9f-4315-9bf9-a0250075244e" />
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/aefbd4b6-d85f-4771-b217-cca7ad48f974" />
 
 ## After opening a text file
 
-<img width="1187" height="798" alt="Screenshot 2025-08-16 at 15 10 50" src="https://github.com/user-attachments/assets/e3f2269d-4672-4968-9409-4f542703218b" />
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/ad15292a-0662-4f9f-b4fa-f1d7ab7ed8b6" />
 
-## After cutting text to words with [cppjieba](https://github.com/yanyiwu/cppjieba)
-
-<img width="1187" height="798" alt="Screenshot 2025-08-16 at 15 17 08" src="https://github.com/user-attachments/assets/86ed997f-5aca-4131-acd8-f1e706590411" />
+[Cppjieba](https://github.com/yanyiwu/cppjieba) is used to cut text to words.
 
 ## Show spaces if you want
 
-<img width="1187" height="798" alt="Screenshot 2025-08-16 at 15 26 48" src="https://github.com/user-attachments/assets/f7dae33f-31c6-438a-a5f8-61730e2e3a07" />
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/dcfcc78a-73c9-4fe9-92b5-027a705ca2d7" />
 
 ## Double-click for marking a word
 You also can input pinyin, translation and examples.
- <img width="682" height="630" alt="Screenshot 2025-08-16 at 15 32 13" src="https://github.com/user-attachments/assets/1099a3f2-5801-4950-9b28-b5673c63cc59" />
+
+<img width="1079" height="693" alt="image" src="https://github.com/user-attachments/assets/ebc81b34-ba74-4575-a53c-e8e02ee14cc6" />
 
 Every entry of the word will be higlighted accordingly to your choice.
-<br>
-<img width="281" height="59" alt="Screenshot 2025-08-16 at 15 36 20" src="https://github.com/user-attachments/assets/00091302-cdb8-4810-853c-260d6ea1589a" />
 
-Check statistics! It's recommended to have around 90% readability
-<br>
-<img width="209" height="343" alt="Screenshot 2025-08-16 at 15 39 40" src="https://github.com/user-attachments/assets/195167c2-9297-4510-a9ab-953aa0411607" />
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/da71e7ed-c129-4bfa-a451-cab51017b285" />
 
-Don't forget to save!!!
-<br>
-<img width="464" height="352" alt="Screenshot 2025-08-16 at 15 42 23" src="https://github.com/user-attachments/assets/2d7ac99e-aed8-47e3-ac22-41aba0b373e4" />
+Check statistics! It's recommended to keep comprehension around 90%.
 
+<img width="180" height="288" alt="image" src="https://github.com/user-attachments/assets/4a0e5598-476e-440d-96ec-27cad26d7ef5" />
+
+## Themes!!!
+
+### Dark theme
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/6ad9f640-6b4b-40a2-9324-5c7625195cb5" />
+
+### Light theme
+
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/47684d46-275f-40fb-8f67-843c7afd2b2d" />
+
+### Pink theme
+
+<img width="1077" height="690" alt="image" src="https://github.com/user-attachments/assets/9986464d-503b-470d-9c9e-260c48969fab" />
 
