@@ -12,19 +12,17 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    showNormal();  // Восстанавливает нормальное состояние
     settings = new QSettings(this);
     loadSettings();
 
     applyTheme(settings->value("app/theme", "dark").toString());
-
     if (!defaultFolderSet) {
-        QMessageBox::information(this, "Choose folder", "Select a directory for chinese-reader", QMessageBox::Ok);
+        QMessageBox::information(this, "Choose folder", "Select a directory for CharacTree", QMessageBox::Ok);
         folderPath = QFileDialog::getExistingDirectory(this, tr("Choose directory"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
         //проверка
-        folderPath = folderPath + "/chinese-reader";
+        folderPath = folderPath + "/charactree";
         defaultOpenFileFolderPath = folderPath + "/texts";
-        termDictFolderPath = folderPath + "/terms";
         QDir dirText(defaultOpenFileFolderPath);
         if (!dirText.exists())
             dirText.mkpath(defaultOpenFileFolderPath);
@@ -32,10 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
         if (!dirTerm.exists())
             dirTerm.mkpath(termDictFolderPath);
     }
-    termDictFilePath = folderPath + "/terms/term-dict.csv";
+
     defaultOpenFileFolderPath = folderPath + "/texts";
-    termDictFolderPath = folderPath + "/terms";
-    databasePath = folderPath + "/database.db";
+    QString exeDir = QCoreApplication::applicationDirPath();
+    databasePath = exeDir + "/database.db";
 
     dbManager = new DbManager(databasePath, this);
 
@@ -63,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     changesInWord = false;
 
-    qDebug() << "defaultFolderSet " << defaultFolderSet;
+    qDebug() << "defaultFolderSet " << defaultOpenFileFolderPath;
 
     ui->groupBox->setHidden(true);
     ui->groupBox_2->setHidden(true);
@@ -200,9 +198,7 @@ void MainWindow::applySettings()
     QString newFolderPath = settings->value("folderPath", "").toString();
     if (!newFolderPath.isEmpty() && newFolderPath != folderPath) {
         folderPath = newFolderPath;
-        termDictFilePath = folderPath + "/terms/term-dict.csv";
         defaultOpenFileFolderPath = folderPath + "/texts";
-        termDictFolderPath = folderPath + "/terms";
         databasePath = folderPath + "/database.db";
 
         // Обновляем пути в базе данных

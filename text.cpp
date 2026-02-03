@@ -117,8 +117,6 @@ void Text::cutToWords()
 
     result = limonp::Join(words.begin(), words.end(), " ");
     textStr = QString::fromStdString(result);
-    //parseTextWords();
-    //setWordColors(wordHashList);
     formatText();
 
     string text = textStr.toStdString();
